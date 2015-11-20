@@ -61,7 +61,6 @@ namespace Bopscotch.Scenes.NonGame
             _dialogs.Add("unlocks", _unlockNotificationDialog);
             _dialogs.Add(Race_Aborted_Dialog, new DisconnectedDialog("Connection Broken - Race Aborted!"));
 			_dialogs.Add(External_Access_Dialog, _externalActionDialog);
-			_dialogs.Add("transaction", new FullGameTransactionDialog());
 
             BackgroundTextureName = Background_Texture_Name;
 
@@ -154,10 +153,6 @@ namespace Bopscotch.Scenes.NonGame
 			{
 				switch (_externalActionDialog.Action)
 				{
-					case ExternalActionDialog.ActionType.PurchaseFullGame:
-						Data.Profile.UnlockFullGame();
-						UnlockFullVersionContent();
-						break;
 					case ExternalActionDialog.ActionType.RateGame:
 						Data.Profile.FlagAsRated();
 						if (!Data.Profile.AvatarCostumeUnlocked("Angel")) { UnlockRatedContent(); }
@@ -245,7 +240,7 @@ namespace Bopscotch.Scenes.NonGame
 
         private void OpenLedaPageOnStore()
         {
-			MonoTouch.UIKit.UIApplication.SharedApplication.OpenUrl(new MonoTouch.Foundation.NSUrl("http://www.ledaentertainment.com/games"));
+			UIKit.UIApplication.SharedApplication.OpenUrl(new Foundation.NSUrl("http://www.ledaentertainment.com/games"));
         }
 
         private void ExitGame()
@@ -394,7 +389,7 @@ namespace Bopscotch.Scenes.NonGame
             if (string.IsNullOrEmpty(_firstDialog)) { _firstDialog = Default_First_Dialog; }
             else if ((_firstDialog == "start") && (Data.Profile.RateBuyRemindersOn)) { _firstDialog = Reminder_Dialog; }
 
-            if ((!Data.Profile.IsTrialVersion) && (_firstDialog != "unlocks")) { UnlockFullVersionContent(); }
+            if (_firstDialog != "unlocks") { UnlockFullVersionContent(); }
 			else if ((Data.Profile.HasRated) && (!Data.Profile.AvatarCostumeUnlocked("Angel"))) { UnlockRatedContent(); }
 
             _titlePopup.Activate(); 
