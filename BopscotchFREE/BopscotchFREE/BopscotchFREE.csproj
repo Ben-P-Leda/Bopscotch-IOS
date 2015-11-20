@@ -527,8 +527,6 @@
     <Compile Include="Scenes\NonGame\TitleScene.cs" />
     <Compile Include="Definitions.cs" />
     <Compile Include="Game1.cs" />
-    <Compile Include="AppDelegateOriginal.cs" />
-    <Compile Include="MainOriginal.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Interface\Dialogs\TitleScene\ExternalAccessDialog.cs" />
   </ItemGroup>
@@ -537,10 +535,6 @@
     <ProjectReference Include="..\..\..\Leda Entertainment\MonoGame-develop\MonoGame.Framework\MonoGame.Framework.iOS.csproj">
       <Project>{DB8508BB-9849-4CC2-BC0F-8EB5DACB3C47}</Project>
       <Name>MonoGame.Framework.iOS</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Leda Entertainment\MonoGame-develop\MonoGame.Framework\MonoGame.Framework.Net.iOS.csproj">
-      <Project>{D4838656-8545-4DC5-8822-D4AD313E17AC}</Project>
-      <Name>MonoGame.Framework.Net.iOS</Name>
     </ProjectReference>
     <ProjectReference Include="..\Core\Core.csproj">
       <Project>{CE65410D-C144-4738-BB11-9EBC95D93F2D}</Project>

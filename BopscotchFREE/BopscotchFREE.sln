@@ -7,10 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoGame.Framework.iOS", "..\..\Leda Entertainment\MonoGame-develop\MonoGame.Framework\MonoGame.Framework.iOS.csproj", "{DB8508BB-9849-4CC2-BC0F-8EB5DACB3C47}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoGame.Framework.Net.iOS", "..\..\Leda Entertainment\MonoGame-develop\MonoGame.Framework\MonoGame.Framework.Net.iOS.csproj", "{D4838656-8545-4DC5-8822-D4AD313E17AC}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lidgren.Network.iOS", "..\..\Leda Entertainment\MonoGame-develop\ThirdParty\Lidgren.Network\Lidgren.Network.iOS.csproj", "{734EAA48-F1CA-481A-B391-0285BC0E8B40}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|iPhoneSimulator = Debug|iPhoneSimulator
@@ -33,18 +29,6 @@ Global
 		{62453ABF-21B9-4E6E-AD36-553A36E1DFE0}.Release|iPhone.Build.0 = Release|iPhone
 		{62453ABF-21B9-4E6E-AD36-553A36E1DFE0}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
 		{62453ABF-21B9-4E6E-AD36-553A36E1DFE0}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
-		{734EAA48-F1CA-481A-B391-0285BC0E8B40}.Ad-Hoc|iPhone.ActiveCfg = Ad-Hoc|iPhone
-		{734EAA48-F1CA-481A-B391-0285BC0E8B40}.Ad-Hoc|iPhone.Build.0 = Ad-Hoc|iPhone
-		{734EAA48-F1CA-481A-B391-0285BC0E8B40}.AppStore|iPhone.ActiveCfg = AppStore|iPhone
-		{734EAA48-F1CA-481A-B391-0285BC0E8B40}.AppStore|iPhone.Build.0 = AppStore|iPhone
-		{734EAA48-F1CA-481A-B391-0285BC0E8B40}.Debug|iPhone.ActiveCfg = Debug|iPhone
-		{734EAA48-F1CA-481A-B391-0285BC0E8B40}.Debug|iPhone.Build.0 = Debug|iPhone
-		{734EAA48-F1CA-481A-B391-0285BC0E8B40}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
-		{734EAA48-F1CA-481A-B391-0285BC0E8B40}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
-		{734EAA48-F1CA-481A-B391-0285BC0E8B40}.Release|iPhone.ActiveCfg = Release|iPhone
-		{734EAA48-F1CA-481A-B391-0285BC0E8B40}.Release|iPhone.Build.0 = Release|iPhone
-		{734EAA48-F1CA-481A-B391-0285BC0E8B40}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
-		{734EAA48-F1CA-481A-B391-0285BC0E8B40}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
 		{CE65410D-C144-4738-BB11-9EBC95D93F2D}.Ad-Hoc|iPhone.ActiveCfg = Debug|Any CPU
 		{CE65410D-C144-4738-BB11-9EBC95D93F2D}.Ad-Hoc|iPhone.Build.0 = Debug|Any CPU
 		{CE65410D-C144-4738-BB11-9EBC95D93F2D}.AppStore|iPhone.ActiveCfg = Debug|Any CPU
@@ -57,18 +41,6 @@ Global
 		{CE65410D-C144-4738-BB11-9EBC95D93F2D}.Release|iPhone.Build.0 = Release|Any CPU
 		{CE65410D-C144-4738-BB11-9EBC95D93F2D}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{CE65410D-C144-4738-BB11-9EBC95D93F2D}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
-		{D4838656-8545-4DC5-8822-D4AD313E17AC}.Ad-Hoc|iPhone.ActiveCfg = Ad-Hoc|iPhone
-		{D4838656-8545-4DC5-8822-D4AD313E17AC}.Ad-Hoc|iPhone.Build.0 = Ad-Hoc|iPhone
-		{D4838656-8545-4DC5-8822-D4AD313E17AC}.AppStore|iPhone.ActiveCfg = AppStore|iPhone
-		{D4838656-8545-4DC5-8822-D4AD313E17AC}.AppStore|iPhone.Build.0 = AppStore|iPhone
-		{D4838656-8545-4DC5-8822-D4AD313E17AC}.Debug|iPhone.ActiveCfg = Debug|iPhone
-		{D4838656-8545-4DC5-8822-D4AD313E17AC}.Debug|iPhone.Build.0 = Debug|iPhone
-		{D4838656-8545-4DC5-8822-D4AD313E17AC}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
-		{D4838656-8545-4DC5-8822-D4AD313E17AC}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
-		{D4838656-8545-4DC5-8822-D4AD313E17AC}.Release|iPhone.ActiveCfg = Release|iPhone
-		{D4838656-8545-4DC5-8822-D4AD313E17AC}.Release|iPhone.Build.0 = Release|iPhone
-		{D4838656-8545-4DC5-8822-D4AD313E17AC}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
-		{D4838656-8545-4DC5-8822-D4AD313E17AC}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
 		{DB8508BB-9849-4CC2-BC0F-8EB5DACB3C47}.Ad-Hoc|iPhone.ActiveCfg = Ad-Hoc|iPhone
 		{DB8508BB-9849-4CC2-BC0F-8EB5DACB3C47}.Ad-Hoc|iPhone.Build.0 = Ad-Hoc|iPhone
 		{DB8508BB-9849-4CC2-BC0F-8EB5DACB3C47}.AppStore|iPhone.ActiveCfg = AppStore|iPhone
