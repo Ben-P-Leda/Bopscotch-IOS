@@ -109,7 +109,6 @@ namespace Bopscotch.Scenes.NonGame
             _dialogs["unlocks"].ExitCallback = HandleConfirmationDialogClose;
             _dialogs[Race_Aborted_Dialog].ExitCallback = HandleConfirmationDialogClose;
 			_dialogs[External_Access_Dialog].ExitCallback = HandleExternalActionDialogClose;
-			_dialogs["transaction"].ExitCallback = HandleTransactionDialogClose;
         }
 
         private void HandleReminderDialogActionSelection(string selectedOption)

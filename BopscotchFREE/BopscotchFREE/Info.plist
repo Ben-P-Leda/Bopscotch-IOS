@@ -1,13 +1,13 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
 	<key>CFBundleDisplayName</key>
-	<string>Bopscotch FREE</string>
+	<string>Bopscotch</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.ledaentertainment.bopscotch_free</string>
+	<string>com.ledaentertainment.bopscotch</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>1.2</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>LSRequiresIPhoneOS</key>
@@ -27,17 +27,17 @@
 	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
-		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
-		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>XSAppIconAssets</key>
 	<string>Resources/Images.xcassets/AppIcons.appiconset</string>
+	<key>UIStatusBarHidden</key>
+	<true/>
 </dict>
 </plist>
