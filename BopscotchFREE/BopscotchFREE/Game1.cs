@@ -6,10 +6,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Leda.Core;
 using Leda.Core.Asset_Management;
 
-#if WINDOWS_PHONE
-using Microsoft.Xna.Framework.GamerServices;
-#endif
-
 namespace Bopscotch
 {
     public class Game1 : GameBase
@@ -18,15 +14,6 @@ namespace Bopscotch
 			: base(Orientation.Landscape)
         {
             TombstoneFileName = Tombstone_File_Name;
-
-#if WINDOWS_PHONE
-            // THIS DOES NOT WORK IN RELEASE BUILD!
-            //Guide.SimulateTrialMode = true;
-
-            // Needed by WP8.1 to handle notification center action
-            Bopscotch.App.RootFrame.Obscured += HandleGameObscured;
-            Bopscotch.App.RootFrame.Unobscured += HandleGameUnobscured;
-#endif
         }
 
         protected override void Initialize()

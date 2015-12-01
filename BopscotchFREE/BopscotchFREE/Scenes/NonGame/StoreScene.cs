@@ -3,8 +3,6 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Windows;
 
-//using Windows.ApplicationModel.Store;
-
 using Microsoft.Xna.Framework;
 
 using Leda.Core.Asset_Management;
@@ -62,6 +60,17 @@ namespace Bopscotch.Scenes.NonGame
             base.Activate();
 
             MusicManager.StopMusic();
+
+            Leda.Core.GameBase.Instance.PurchaseManager.RequestProductData(
+                new List<string>() 
+                {
+                    "com.ledaentertainment.bopscotch.10lives",
+                    "com.ledaentertainment.bopscotch.20lives",
+                    "com.ledaentertainment.bopscotch.50lives",
+                    "com.ledaentertainment.bopscotch.2tickets",
+                    "com.ledaentertainment.bopscotch.5tickets",
+                    "com.ledaentertainment.bopscotch.10tickets",
+                });
 
             if (!_loadedProducts) 
             { 

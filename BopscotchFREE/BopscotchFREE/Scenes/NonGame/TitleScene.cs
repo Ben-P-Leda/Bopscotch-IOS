@@ -165,35 +165,35 @@ namespace Bopscotch.Scenes.NonGame
 			else { ActivateDialog("main"); }
 		}
 
-		private void HandleTransactionDialogClose(string selectedOption)
-		{
-			if (selectedOption == "Back")
-			{ 
-				ActivateDialog("main");
-			}
-			else
-			{
-				PrepareForExternalAction(ExternalActionDialog.ActionType.PurchaseFullGame);
-				GameBase.Instance.PurchaseManager.CompleteTransactionCallback = HandlePurchaseAttemptComplete;
-
-				if (selectedOption == "Restore")
-				{
-					GameBase.Instance.PurchaseManager.Restore();
-				}
-				else if (selectedOption == "Buy")
-				{
-					GameBase.Instance.PurchaseManager.PurchaseProduct(Full_Game_Product_Code);
-				}
-			}
-
-			switch (selectedOption)
-			{
-			case "Adventure": Data.Profile.PlayingRaceMode = false; ActivateDialog("survival-levels"); break;
-			case "Race": HandleRaceStartSelection(); break;
-			case "Full Game" : OpenPurchaseMechanism(); break;
-			case "Back": ActivateDialog("main"); break;
-			}
-		}
+//		private void HandleTransactionDialogClose(string selectedOption)
+//		{
+//			if (selectedOption == "Back")
+//			{ 
+//				ActivateDialog("main");
+//			}
+//			else
+//			{
+//				PrepareForExternalAction(ExternalActionDialog.ActionType.PurchaseFullGame);
+//				GameBase.Instance.PurchaseManager.CompleteTransactionCallback = HandlePurchaseAttemptComplete;
+//
+//				if (selectedOption == "Restore")
+//				{
+//					GameBase.Instance.PurchaseManager.Restore();
+//				}
+//				else if (selectedOption == "Buy")
+//				{
+//					GameBase.Instance.PurchaseManager.PurchaseProduct(Full_Game_Product_Code);
+//				}
+//			}
+//
+//			switch (selectedOption)
+//			{
+//			case "Adventure": Data.Profile.PlayingRaceMode = false; ActivateDialog("survival-levels"); break;
+//			case "Race": HandleRaceStartSelection(); break;
+//			case "Full Game" : OpenPurchaseMechanism(); break;
+//			case "Back": ActivateDialog("main"); break;
+//			}
+//		}
 
 		private void OpenRatingMechanism()
 		{
@@ -231,8 +231,9 @@ namespace Bopscotch.Scenes.NonGame
                 case "About": NextSceneType = typeof(CreditsScene); Deactivate(); break;
                 case "Options": ActivateDialog("options"); break;
                 case "More Games": OpenLedaPageOnStore(); ActivateDialog("main"); break;
+                case "Store": NextSceneType = typeof(StoreScene); Deactivate(); break;
 				case "Rate": OpenRatingMechanism(); break;
-				case "Full Game": OpenPurchaseMechanism(); break;
+				//case "Full Game": OpenPurchaseMechanism(); break;
                 case "Quit": ExitGame(); break;
             }
         }
@@ -266,9 +267,10 @@ namespace Bopscotch.Scenes.NonGame
         {
             switch (selectedOption)
             {
+                case "Add Lives": NextSceneType = typeof(StoreScene); Deactivate(); break;
                 case "Adventure": Data.Profile.PlayingRaceMode = false; ActivateDialog("survival-levels"); break;
                 case "Race": HandleRaceStartSelection(); break;
-				case "Full Game" : OpenPurchaseMechanism(); break;
+				//case "Full Game" : OpenPurchaseMechanism(); break;
                 case "Back": ActivateDialog("main"); break;
             }
         }
@@ -386,6 +388,7 @@ namespace Bopscotch.Scenes.NonGame
             _firstDialog = NextSceneParameters.Get<string>(First_Dialog_Parameter_Name);
 
             if (string.IsNullOrEmpty(_firstDialog)) { _firstDialog = Default_First_Dialog; }
+            else if (string.IsNullOrEmpty(_firstDialog)) { _firstDialog = Default_First_Dialog; }
             else if ((_firstDialog == "start") && (Data.Profile.RateBuyRemindersOn)) { _firstDialog = Reminder_Dialog; }
 
             if (_firstDialog != "unlocks") { UnlockFullVersionContent(); }
@@ -464,8 +467,6 @@ namespace Bopscotch.Scenes.NonGame
         private const string Title_Texture_Name = "popup-title";
         private const string Default_First_Dialog = "main";
         private const string Reminder_Dialog = "reminder";
-
-		private const string Full_Game_Product_Code = "com.ledaentertainment.bopscotch.fullgame";
 
         public const string First_Dialog_Parameter_Name = "first-dialog";
         public const string Race_Aborted_Dialog = "race-aborted";

@@ -37,7 +37,8 @@
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <MtouchArch>ARMv7, ARM64</MtouchArch>
     <ConsolePause>false</ConsolePause>
-    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignKey>iPhone Distribution: Leda Entertainment Ltd. (JRT76KN578)</CodesignKey>
+    <CodesignProvision>Automatic:AppStore</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>full</DebugType>
@@ -61,10 +62,11 @@
     <MtouchArch>ARMv7, ARM64</MtouchArch>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <MtouchProfiling>true</MtouchProfiling>
-    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignKey>iPhone Developer: Ben Pritchard (XMF26RTG79)</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
     <IpaPackageName>
     </IpaPackageName>
+    <CodesignProvision>0668d759-0a57-4103-8e53-b261fbeefeb4</CodesignProvision>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -523,7 +525,6 @@
     <Compile Include="Scenes\NonGame\CreditsScene.cs" />
     <Compile Include="Scenes\NonGame\LoadingScene.cs" />
     <Compile Include="Scenes\NonGame\StoreScene.cs" />
-    <Compile Include="Scenes\NonGame\TitleSceneUpdated.cs" />
     <Compile Include="Scenes\NonGame\TitleScene.cs" />
     <Compile Include="Definitions.cs" />
     <Compile Include="Game1.cs" />
