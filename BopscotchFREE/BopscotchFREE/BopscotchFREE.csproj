@@ -74,9 +74,6 @@
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.iOS" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="Xamarin.InAppPurchase-Unified">
-      <HintPath>..\Components\xamarin.inapppurchase-2.8\lib\ios-unified\Xamarin.InAppPurchase-Unified.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Contents.json" />

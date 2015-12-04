@@ -2,8 +2,6 @@
 using System.Xml.Linq;
 using System.Collections.Generic;
 
-//using Windows.ApplicationModel.Store;
-
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -11,6 +9,7 @@ using Leda.Core;
 using Leda.Core.Timing;
 using Leda.Core.Asset_Management;
 using Leda.Core.Gamestate_Management;
+using Leda.Core.External_APIS.iOS;
 
 using Bopscotch.Data;
 using Bopscotch.Data.Avatar;
@@ -80,36 +79,39 @@ namespace Bopscotch.Interface.Dialogs.StoreScene
             _cancelButtonCaption = "Back";
         }
 
-//        public void InitializeProducts(ListingInformation products)
-//        {
-//            Dictionary<string, Point> iapImageMappings = new Dictionary<string, Point>()
-//            {
-//                { "Bopscotch_10_Lives", new Point(1,0) },
-//                { "Bopscotch_20_Lives", new Point(1,1) },
-//                { "Bopscotch_50_Lives", new Point(1,2) },
-//                { "Bopscotch_2_Tickets", new Point(0,0) },
-//                { "Bopscotch_5_tickets", new Point(0,1) },
-//                { "Bopscotch_10_Tickets", new Point(0,2) }
-//            };
-//
-//            _productInfo = new Dictionary<string, string>();
-//
-//            foreach(KeyValuePair<string, Point>kvp in iapImageMappings)
-//            {
-//                if (products.ProductListings.ContainsKey(kvp.Key))
-//                {
-//                    AddItem(kvp.Key, kvp.Value);
-//                    _productInfo.Add(
-//                        kvp.Key, string.Format("{0} - {1}", products.ProductListings[kvp.Key].Name, products.ProductListings[kvp.Key].FormattedPrice));
-//                }
-//            }
-//        }
+        public void InitializeProducts(Dictionary<string, ProductContainer> products)
+        {
+            FlushItems();
+
+            Dictionary<string, Point> iapImageMappings = new Dictionary<string, Point>()
+            {
+                { "com.ledaentertainment.bopscotch.10lives", new Point(1,0) },
+                { "com.ledaentertainment.bopscotch.20lives", new Point(1,1) },
+                { "com.ledaentertainment.bopscotch.50lives", new Point(1,2) },
+                { "com.ledaentertainment.bopscotch.2tickets", new Point(0,0) },
+                { "com.ledaentertainment.bopscotch.5tickets", new Point(0,1) },
+                { "com.ledaentertainment.bopscotch.10tickets", new Point(0,2) }
+            };
+
+            _productInfo = new Dictionary<string, string>();
+
+            foreach(KeyValuePair<string, Point>kvp in iapImageMappings)
+            {
+                if (products.ContainsKey(kvp.Key))
+                {
+                    AddItem(kvp.Key, kvp.Value);
+                    _productInfo.Add(
+                        kvp.Key, string.Format("{0} - {1}", products[kvp.Key].Name, products[kvp.Key].FormattedPrice));
+                }
+            }
+        }
 
         private void AddItem(string itemCode, Point matrixTopLeft)
         {
             CarouselFlatImage item = new CarouselFlatImage(itemCode, Items_Texture);
             item.RenderLayer = RenderLayer;
             item.Frame = new Rectangle(Item_Image_Width * matrixTopLeft.X, Item_Image_Height * matrixTopLeft.Y, Item_Image_Width, Item_Image_Height);
+            item.Origin = new Vector2(Item_Image_Width, Item_Image_Height) / 2.0f;
 
             AddItem(item);
         }

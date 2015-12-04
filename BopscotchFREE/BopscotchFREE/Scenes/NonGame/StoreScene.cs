@@ -84,7 +84,7 @@ namespace Bopscotch.Scenes.NonGame
                 });
         }
 
-        private void HandleProductLoadCompleteCallback(List<ProductContainer> products)
+        private void HandleProductLoadCompleteCallback(Dictionary<string, ProductContainer> products)
         {
             _dialogs["loading-store"].DismissWithReturnValue("");
 
@@ -123,6 +123,7 @@ namespace Bopscotch.Scenes.NonGame
                 if ((_returnToGame) && (Data.Profile.Lives > 0))
                 {
                     NextSceneType = typeof(SurvivalGameplayScene);
+                    MusicManager.PlayLoopedMusic("survival-gameplay");
                 }
                 else
                 {

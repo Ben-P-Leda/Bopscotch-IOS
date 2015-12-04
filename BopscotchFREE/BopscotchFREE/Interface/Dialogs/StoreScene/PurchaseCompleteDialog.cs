@@ -1,14 +1,16 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Collections.Generic;
+
+using Microsoft.Xna.Framework;
+
+using Leda.Core.External_APIS.iOS;
 
 using Bopscotch.Interface;
-
-//using Windows.ApplicationModel.Store;
 
 namespace Bopscotch.Interface.Dialogs.StoreScene
 {
     public class PurchaseCompleteDialog : ButtonDialog
     {
-        //public ListingInformation Products { private get; set; }
+        public Dictionary<string, ProductContainer> Products { private get; set; }
         public string ItemCode { private get; set; }
 
         public PurchaseCompleteDialog(string caption)
@@ -26,7 +28,7 @@ namespace Bopscotch.Interface.Dialogs.StoreScene
 
         public override void Activate()
         {
-            //_boxCaption = Translator.Translation("purchase-complete").Replace("[ITEM]", Products.ProductListings[ItemCode].Name);
+            _boxCaption = Translator.Translation("purchase-complete").Replace("[ITEM]", Products[ItemCode].Name);
             base.Activate();
         }
 

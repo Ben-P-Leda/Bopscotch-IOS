@@ -8,7 +8,7 @@ namespace Leda.Core.External_APIS.iOS
 {
 	public class InAppPurchaseManager : SKProductsRequestDelegate 
 	{
-        public delegate void ProductLoadCompleteCallback(List<ProductContainer> products);
+        public delegate void ProductLoadCompleteCallback(Dictionary<string, ProductContainer> products);
         public ProductLoadCompleteCallback ProductLoadCompleteHandler { private get; set; }
 
 		public delegate void TransactionCompletionCallback(string message, bool transactionSucceeded);
@@ -69,7 +69,7 @@ namespace Leda.Core.External_APIS.iOS
 		{
 			SKProduct[] products = response.Products;
            
-            List<ProductContainer> productsList = new List<ProductContainer>();
+            Dictionary<string, ProductContainer> productsList = new Dictionary<string, ProductContainer>();
             List<string> invalidProducts = new List<string>();
 
 			NSDictionary userInfo = null;
@@ -81,12 +81,13 @@ namespace Leda.Core.External_APIS.iOS
 					productIdsArray[i] = new NSString(response.Products[i].ProductIdentifier);
 					productsArray[i] = response.Products[i];
 
-                    productsList.Add(new ProductContainer()
+                    ProductContainer container = new ProductContainer()
                     {
                         Id = response.Products[i].ProductIdentifier,
-                        Price = GetFormattedPrice(response.Products[i].Price),
+                        FormattedPrice = GetFormattedPrice(response.Products[i].Price),
                         Name = response.Products[i].LocalizedTitle
-                    });
+                    };
+                    productsList.Add(container.Id, container);
 				}
 				userInfo = NSDictionary.FromObjectsAndKeys (productsArray, productIdsArray);
 			}
