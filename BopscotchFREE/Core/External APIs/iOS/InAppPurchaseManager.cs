@@ -8,10 +8,11 @@ namespace Leda.Core.External_APIS.iOS
 {
 	public class InAppPurchaseManager : SKProductsRequestDelegate 
 	{
+        public delegate void ProductLoadCompleteCallback(Dictionary<string, ProductContainer> products);
+        public ProductLoadCompleteCallback ProductLoadCompleteHandler { private get; set; }
+
 		public delegate void TransactionCompletionCallback(string message, bool transactionSucceeded);
-
 		private TransactionCompletionCallback _completeTransactionCallback;
-
 		public TransactionCompletionCallback CompleteTransactionCallback 
 		{
 			set
@@ -59,7 +60,7 @@ namespace Leda.Core.External_APIS.iOS
 		 	NSSet productIdentifiers = NSSet.MakeNSObjectSet<NSString>(array);			
 
 			//set up product request for in-app purchase
-			productsRequest  = new SKProductsRequest(productIdentifiers);
+			productsRequest = new SKProductsRequest(productIdentifiers);
 			productsRequest.Delegate = this; // SKProductsRequestDelegate.ReceivedResponse
 			productsRequest.Start();
 		}
@@ -67,23 +68,48 @@ namespace Leda.Core.External_APIS.iOS
 		public override void ReceivedResponse (SKProductsRequest request, SKProductsResponse response)
 		{
 			SKProduct[] products = response.Products;
+           
+            Dictionary<string, ProductContainer> productsList = new Dictionary<string, ProductContainer>();
+            List<string> invalidProducts = new List<string>();
 
 			NSDictionary userInfo = null;
 			if (products.Length > 0) {
 				NSObject[] productIdsArray = new NSObject[response.Products.Length];
 				NSObject[] productsArray = new NSObject[response.Products.Length];
-				for (int i = 0; i < response.Products.Length; i++) {
+				for (int i = 0; i < response.Products.Length; i++) 
+                {
 					productIdsArray[i] = new NSString(response.Products[i].ProductIdentifier);
 					productsArray[i] = response.Products[i];
+
+                    ProductContainer container = new ProductContainer()
+                    {
+                        Id = response.Products[i].ProductIdentifier,
+                        FormattedPrice = GetFormattedPrice(response.Products[i].Price),
+                        Name = response.Products[i].LocalizedTitle
+                    };
+                    productsList.Add(container.Id, container);
 				}
 				userInfo = NSDictionary.FromObjectsAndKeys (productsArray, productIdsArray);
 			}
 			NSNotificationCenter.DefaultCenter.PostNotificationName(InAppPurchaseManagerProductsFetchedNotification,this,userInfo);
 
-			foreach (string invalidProductId in response.InvalidProducts) {
+			foreach (string invalidProductId in response.InvalidProducts) 
+            {
 				Console.WriteLine("Invalid product id: " + invalidProductId );
+                invalidProducts.Add(invalidProductId);
 			}
+
+            if (ProductLoadCompleteHandler != null)
+            {
+                ProductLoadCompleteHandler(productsList);
+            }
 		}
+
+        private string GetFormattedPrice(NSDecimalNumber price)
+        {
+            Decimal d = Convert.ToDecimal(price.ToString());
+            return d.ToString("C", System.Globalization.CultureInfo.CurrentCulture);
+        }
 
 		public void PurchaseProduct(string appStoreProductId)
 		{
@@ -91,6 +117,7 @@ namespace Leda.Core.External_APIS.iOS
 			SKPayment payment = SKPayment.PaymentWithProduct (appStoreProductId);	
 			SKPaymentQueue.DefaultQueue.AddPayment (payment);
 		}
+
 		public void CompleteTransaction (SKPaymentTransaction transaction)
 		{
 			Console.WriteLine ("CompleteTransaction " + transaction.TransactionIdentifier);

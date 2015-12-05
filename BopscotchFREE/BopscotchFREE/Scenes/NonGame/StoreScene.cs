@@ -5,7 +5,9 @@ using System.Windows;
 
 using Microsoft.Xna.Framework;
 
+using Leda.Core;
 using Leda.Core.Asset_Management;
+using Leda.Core.External_APIS.iOS;
 
 using Bopscotch.Scenes.BaseClasses;
 using Bopscotch.Scenes.Gameplay.Survival;
@@ -29,8 +31,9 @@ namespace Bopscotch.Scenes.NonGame
             _purchaseCompleteDialog = new PurchaseCompleteDialog("");
             _purchaseCompleteDialog.SelectionCallback = PurchaseDialogButtonCallback;
             _consumablesDialog = new ConsumablesDialog();
-            
-            _dialogs.Add("store-status", new StoreStatusDialog());
+
+            _dialogs.Add("loading-store", new LoadingDialog(LoadProducts));
+            _dialogs.Add("store-closed", new StoreClosedDialog());
             _dialogs.Add("store-items", new StorePurchaseDialog(RegisterGameObject, UnregisterGameObject));
             _dialogs.Add("purchase-complete", _purchaseCompleteDialog);
             _dialogs.Add("consumables", _consumablesDialog);
@@ -38,7 +41,6 @@ namespace Bopscotch.Scenes.NonGame
             BackgroundTextureName = Background_Texture_Name;
 
             _loadedProducts = false;
-            LoadProducts();
         }
 
         private void PurchaseDialogButtonCallback(string buttonCaption)
@@ -51,6 +53,9 @@ namespace Bopscotch.Scenes.NonGame
             base.CompletePostStartupLoadInitialization();
 
             foreach (KeyValuePair<string, ButtonDialog> kvp in _dialogs) { kvp.Value.ExitCallback = HandleActiveDialogExit; }
+
+            GameBase.Instance.PurchaseManager.CompleteTransactionCallback = HandleTransactionCompleteCallback;
+            GameBase.Instance.PurchaseManager.ProductLoadCompleteHandler = HandleProductLoadCompleteCallback;
         }
 
         public override void Activate()
@@ -61,7 +66,13 @@ namespace Bopscotch.Scenes.NonGame
 
             MusicManager.StopMusic();
 
-            Leda.Core.GameBase.Instance.PurchaseManager.RequestProductData(
+            ActivateDialog("loading-store");
+        }
+
+        private void LoadProducts()
+        {
+            
+            GameBase.Instance.PurchaseManager.RequestProductData(
                 new List<string>() 
                 {
                     "com.ledaentertainment.bopscotch.10lives",
@@ -71,37 +82,37 @@ namespace Bopscotch.Scenes.NonGame
                     "com.ledaentertainment.bopscotch.5tickets",
                     "com.ledaentertainment.bopscotch.10tickets",
                 });
+        }
 
-            if (!_loadedProducts) 
-            { 
-                ActivateDialog("store-status"); 
-            }
-            else 
-            { 
+        private void HandleProductLoadCompleteCallback(Dictionary<string, ProductContainer> products)
+        {
+            _dialogs["loading-store"].DismissWithReturnValue("");
+
+            if ((products != null) && (products.Count > 0))
+            {
+                ((StorePurchaseDialog)_dialogs["store-items"]).InitializeProducts(products);
+                _purchaseCompleteDialog.Products = products;
                 ActivateDialog("store-items");
                 _consumablesDialog.Activate();
             }
+            else
+            {
+                ActivateDialog("store-closed");
+            }
         }
 
-        private async void LoadProducts()
+        private void HandleTransactionCompleteCallback(string returnMessage, bool purchaseSucceeded)
         {
-//            ListingInformation products = null;
-//
-//            try
-//            {
-//                products = await CurrentApp.LoadListingInformationAsync();
-//            }
-//            catch (Exception)
-//            {
-//                products = null;
-//            }
-//
-//            if ((products != null) && (products.ProductListings.Count > 0))
-//            {
-//                ((StorePurchaseDialog)_dialogs["store-items"]).InitializeProducts(products);
-//                _purchaseCompleteDialog.Products = products;
-//                _loadedProducts = true;
-//            }
+            if (purchaseSucceeded)
+            {
+                FulfillPurchase(returnMessage);
+                _purchaseCompleteDialog.ItemCode = returnMessage;
+                ActivateDialog("purchase-complete");
+            }
+            else
+            { 
+                ActivateDialog("store-items");
+            }
         }
 
         private void HandleActiveDialogExit(string selectedOption)
@@ -114,11 +125,12 @@ namespace Bopscotch.Scenes.NonGame
             {
                 ActivateDialog("store-items");
             }
-            else
+            else if (!string.IsNullOrWhiteSpace(selectedOption))
             {
                 if ((_returnToGame) && (Data.Profile.Lives > 0))
                 {
                     NextSceneType = typeof(SurvivalGameplayScene);
+                    MusicManager.PlayLoopedMusic("survival-gameplay");
                 }
                 else
                 {
@@ -130,44 +142,19 @@ namespace Bopscotch.Scenes.NonGame
 
         private void InitiatePurchase(string selection)
         {
-//            Deployment.Current.Dispatcher.BeginInvoke(async () =>
-//            {
-//                try
-//                {
-//                    string receipt = await CurrentApp.RequestProductPurchaseAsync(selection, true);
-//
-//                    if (CurrentApp.LicenseInformation.ProductLicenses[selection].IsActive)
-//                    {
-//                        CurrentApp.ReportProductFulfillment(selection);
-//
-//                        FulfillPurchase(selection);
-//
-//                        _purchaseCompleteDialog.ItemCode = selection;
-//                        ActivateDialog("purchase-complete");
-//                    }
-//                    else
-//                    {
-//                        ActivateDialog("store-items");
-//                    }
-//                }
-//                catch (Exception)
-//                {
-//                    ActivateDialog("store-items");
-//                }
-//            });
+            GameBase.Instance.PurchaseManager.PurchaseProduct(selection);
         }
 
         private void FulfillPurchase(string productCode)
         {
             switch (productCode)
             {
-                case "Bopscotch_Test_Product": Data.Profile.Lives += 1; Data.Profile.GoldenTickets += 1; break;
-                case "Bopscotch_10_Lives": Data.Profile.Lives += 10; break;
-                case "Bopscotch_20_Lives": Data.Profile.Lives += 20; break;
-                case "Bopscotch_50_Lives": Data.Profile.Lives += 50; break;
-                case "Bopscotch_2_Tickets": Data.Profile.GoldenTickets += 2; break;
-                case "Bopscotch_5_tickets": Data.Profile.GoldenTickets += 5; break;
-                case "Bopscotch_10_Tickets": Data.Profile.GoldenTickets += 10; break;
+                case "com.ledaentertainment.bopscotch.10lives": Data.Profile.Lives += 10; break;
+                case "com.ledaentertainment.bopscotch.20lives": Data.Profile.Lives += 20; break;
+                case "com.ledaentertainment.bopscotch.50lives": Data.Profile.Lives += 50; break;
+                case "com.ledaentertainment.bopscotch.2tickets": Data.Profile.GoldenTickets += 2; break;
+                case "com.ledaentertainment.bopscotch.5tickets": Data.Profile.GoldenTickets += 5; break;
+                case "com.ledaentertainment.bopscotch.10tickets": Data.Profile.GoldenTickets += 10; break;
             }
 
             Data.Profile.Save();

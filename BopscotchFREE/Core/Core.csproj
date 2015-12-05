@@ -156,6 +156,7 @@
     <Compile Include="Utility\Range.cs" />
     <Compile Include="Utility\TextWriter.cs" />
     <Compile Include="Utility\Utility.cs" />
+    <Compile Include="External APIs\iOS\ProductContainer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>

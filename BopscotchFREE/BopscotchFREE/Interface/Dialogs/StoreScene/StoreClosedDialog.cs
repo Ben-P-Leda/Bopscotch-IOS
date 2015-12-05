@@ -2,12 +2,12 @@
 
 namespace Bopscotch.Interface.Dialogs.StoreScene
 {
-    public class StoreStatusDialog : ButtonDialog
+    public class StoreClosedDialog : ButtonDialog
     {
-        public StoreStatusDialog()
+        public StoreClosedDialog()
             : this(Default_Caption) { }
 
-        public StoreStatusDialog(string caption)
+        public StoreClosedDialog(string caption)
             : base()
         {
             Height = Dialog_Height;
