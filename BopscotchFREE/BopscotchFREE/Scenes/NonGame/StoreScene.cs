@@ -19,7 +19,6 @@ namespace Bopscotch.Scenes.NonGame
 {
     public class StoreScene : MenuDialogScene
     {
-        private bool _loadedProducts;
         private bool _returnToGame;
 
         private PurchaseCompleteDialog _purchaseCompleteDialog;
@@ -39,8 +38,6 @@ namespace Bopscotch.Scenes.NonGame
             _dialogs.Add("consumables", _consumablesDialog);
 
             BackgroundTextureName = Background_Texture_Name;
-
-            _loadedProducts = false;
         }
 
         private void PurchaseDialogButtonCallback(string buttonCaption)

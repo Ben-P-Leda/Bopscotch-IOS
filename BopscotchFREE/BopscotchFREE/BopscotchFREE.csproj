@@ -368,6 +368,10 @@
     <BundleResource Include="Content\Textures\Signs\SpeedLimit\sign-speed-3-4.xnb" />
     <BundleResource Include="Content\Textures\Signs\SpeedLimit\sign-speed-4-4.xnb" />
     <BundleResource Include="Content\Textures\Interface\button-icon-strip.xnb" />
+    <BundleResource Include="Content\Files\Levels\Lava Cave\Survival\0.xml" />
+    <BundleResource Include="Content\Textures\Backgrounds\background-8.xnb" />
+    <BundleResource Include="Content\Textures\Blocks\Special\bomb.xnb" />
+    <BundleResource Include="Content\Textures\Effects\Particles\fireball.xnb" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Communication\CommunicationHandler.cs" />
@@ -530,6 +534,8 @@
     <Compile Include="Interface\Dialogs\TitleScene\ExternalAccessDialog.cs" />
     <Compile Include="Interface\Dialogs\StoreScene\StoreClosedDialog.cs" />
     <Compile Include="Interface\Dialogs\StoreScene\LoadingDialog.cs" />
+    <Compile Include="Gameplay\Objects\Environment\Blocks\BombBlock.cs" />
+    <Compile Include="Gameplay\Objects\Environment\Blocks\BombBlockBlastCollider.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
@@ -553,6 +559,8 @@
     <Folder Include="Interface\Dialogs\HelpScenes\" />
     <Folder Include="Scenes\" />
     <Folder Include="Content\Music\" />
+    <Folder Include="Content\Files\Levels\Lava Cave\" />
+    <Folder Include="Content\Files\Levels\Lava Cave\Survival\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Music\avatar-build.mp3" />
