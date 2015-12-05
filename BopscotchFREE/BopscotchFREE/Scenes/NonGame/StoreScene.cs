@@ -103,9 +103,16 @@ namespace Bopscotch.Scenes.NonGame
 
         private void HandleTransactionCompleteCallback(string returnMessage, bool purchaseSucceeded)
         {
-            //if (purchaseSucceeded) { returnMessage = "Full Game Activated!"; }
-
-//            _externalActionDialog.CompleteAction(returnMessage, purchaseSucceeded);
+            if (purchaseSucceeded)
+            {
+                FulfillPurchase(returnMessage);
+                _purchaseCompleteDialog.ItemCode = returnMessage;
+                ActivateDialog("purchase-complete");
+            }
+            else
+            { 
+                ActivateDialog("store-items");
+            }
         }
 
         private void HandleActiveDialogExit(string selectedOption)
@@ -135,44 +142,19 @@ namespace Bopscotch.Scenes.NonGame
 
         private void InitiatePurchase(string selection)
         {
-//            Deployment.Current.Dispatcher.BeginInvoke(async () =>
-//            {
-//                try
-//                {
-//                    string receipt = await CurrentApp.RequestProductPurchaseAsync(selection, true);
-//
-//                    if (CurrentApp.LicenseInformation.ProductLicenses[selection].IsActive)
-//                    {
-//                        CurrentApp.ReportProductFulfillment(selection);
-//
-//                        FulfillPurchase(selection);
-//
-//                        _purchaseCompleteDialog.ItemCode = selection;
-//                        ActivateDialog("purchase-complete");
-//                    }
-//                    else
-//                    {
-//                        ActivateDialog("store-items");
-//                    }
-//                }
-//                catch (Exception)
-//                {
-//                    ActivateDialog("store-items");
-//                }
-//            });
+            GameBase.Instance.PurchaseManager.PurchaseProduct(selection);
         }
 
         private void FulfillPurchase(string productCode)
         {
             switch (productCode)
             {
-                case "Bopscotch_Test_Product": Data.Profile.Lives += 1; Data.Profile.GoldenTickets += 1; break;
-                case "Bopscotch_10_Lives": Data.Profile.Lives += 10; break;
-                case "Bopscotch_20_Lives": Data.Profile.Lives += 20; break;
-                case "Bopscotch_50_Lives": Data.Profile.Lives += 50; break;
-                case "Bopscotch_2_Tickets": Data.Profile.GoldenTickets += 2; break;
-                case "Bopscotch_5_tickets": Data.Profile.GoldenTickets += 5; break;
-                case "Bopscotch_10_Tickets": Data.Profile.GoldenTickets += 10; break;
+                case "com.ledaentertainment.bopscotch.10lives": Data.Profile.Lives += 10; break;
+                case "com.ledaentertainment.bopscotch.20lives": Data.Profile.Lives += 20; break;
+                case "com.ledaentertainment.bopscotch.50lives": Data.Profile.Lives += 50; break;
+                case "com.ledaentertainment.bopscotch.2tickets": Data.Profile.GoldenTickets += 2; break;
+                case "com.ledaentertainment.bopscotch.5tickets": Data.Profile.GoldenTickets += 5; break;
+                case "com.ledaentertainment.bopscotch.10tickets": Data.Profile.GoldenTickets += 10; break;
             }
 
             Data.Profile.Save();
