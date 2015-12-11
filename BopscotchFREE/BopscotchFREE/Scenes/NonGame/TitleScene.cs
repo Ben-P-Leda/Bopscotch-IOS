@@ -451,10 +451,10 @@ namespace Bopscotch.Scenes.NonGame
             if (_returningFromRateOrBuy) { ActivateDialog("main"); _returningFromRateOrBuy = false; }
         }
 			
-		public override void HandleGameResigned ()
+		public override void HandleGameDeactivated ()
 		{
 			MusicManager.StopMusic();
-			base.HandleGameResigned();
+			base.HandleGameDeactivated();
 		}
 
 		public override void HandleGameActivated ()

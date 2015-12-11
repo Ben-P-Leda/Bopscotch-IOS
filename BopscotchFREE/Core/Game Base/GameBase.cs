@@ -12,10 +12,6 @@ using Leda.Core.Gamestate_Management;
 using Leda.Core.Asset_Management;
 using Leda.Core.Game_Objects.Behaviours;
 
-#if WINDOWS_PHONE
-using Microsoft.Phone.Shell;
-#endif
-
 namespace Leda.Core
 {
     public class GameBase : Game
@@ -79,11 +75,10 @@ namespace Leda.Core
 
 			if (orientation == Orientation.Portrait) 
 			{
-				graphics.SupportedOrientations = DisplayOrientation.Portrait;
-#if IOS
-				graphics.SupportedOrientations |= DisplayOrientation.PortraitDown;
-#endif
-			} else {
+				graphics.SupportedOrientations = DisplayOrientation.Portrait | DisplayOrientation.PortraitDown;
+			} 
+            else 
+            {
 				graphics.SupportedOrientations = DisplayOrientation.LandscapeLeft | DisplayOrientation.LandscapeRight;
 			}
 
@@ -101,12 +96,6 @@ namespace Leda.Core
 
 			PurchaseManager = new External_APIS.iOS.InAppPurchaseManager();
 			ReviewManager = new External_APIS.iOS.ReviewAppManager();
-
-#if WINDOWS_PHONE
-            PhoneApplicationService.Current.Deactivated += new EventHandler<DeactivatedEventArgs>(HandleGameDeactivated);
-            PhoneApplicationService.Current.Closing += new EventHandler<ClosingEventArgs>(HandleGameClosed);
-            PhoneApplicationService.Current.Activated += new System.EventHandler<ActivatedEventArgs>(HandleGameActivated);
-#endif
         }
 
         private Vector2 ConvertToScreenPosition(Vector2 worldSpacePosition) { return (worldSpacePosition * _resolutionScaling) + _resolutionOffset; }
@@ -117,6 +106,22 @@ namespace Leda.Core
         {
 			MusicManager.Initialize();
             base.Initialize();
+        }
+
+        protected override void OnActivated(object sender, EventArgs args)
+        {
+            base.OnActivated(sender, args);
+
+            if (_currentScene != null)
+            {
+                _currentScene.HandleGameActivated();
+            }
+        }
+
+        protected override void OnDeactivated(object sender, EventArgs args)
+        {
+            _currentScene.HandleGameDeactivated();
+            base.OnDeactivated(sender, args);
         }
 
         protected void AddScene(Scene toAdd)
@@ -176,72 +181,6 @@ namespace Leda.Core
         {
             foreach (KeyValuePair<Type, Scene> kvp in _scenes) { kvp.Value.HandleAssetLoadCompletion(loaderSceneType); }
         }
-
-#if WINDOWS_PHONE
-        protected void HandleGameDeactivated(object sender, DeactivatedEventArgs e)
-        {
-            HandleTombstoneEvent();
-        }
-
-        protected void HandleGameClosed(object sender, ClosingEventArgs e)
-        {
-            HandleTombstoneEvent();
-        }
-
-        protected void HandleGameActivated(object sender, ActivatedEventArgs e)
-        {
-            if ((e.IsApplicationInstancePreserved) && (_currentScene != null)) 
-            {
-                FileManager.DeleteFile(_tombstoneFileName);
-                _currentScene.HandleFastResume(); 
-            }
-        }
-#endif
-
-#if ANDROID
-
-		public void HandleActivityPauseEvent()
-		{
-			MusicManager.StopMusic();
-			HandleTombstoneEvent();
-		}
-
-		public void HandleActivityResumeEvent()
-		{
-			if ((FileManager.FileExists(_tombstoneFileName)) && (_currentScene != null))
-			{
-				FileManager.DeleteFile(_tombstoneFileName);
-				_currentScene.HandleFastResume();
-			}
-		}
-
-#endif
-
-#if IOS
-		public void HandleGameActivatedEvent()
-		{
-			if (_currentScene != null)
-			{
-				_currentScene.HandleGameActivated();
-			}
-		}
-
-		public void HandleGameResignedEvent()
-		{
-			_currentScene.HandleGameResigned();
-		}
-
-		public void HandleGameResumedEvent()
-		{
-			_currentScene.HandleGameReturnedToForeground ();
-		}
-
-		public void HandleGameBackgroundEvent()
-		{
-			_currentScene.HandleGameSentToBackground ();
-		}
-
-#endif
 
         private void HandleTombstoneEvent()
         {

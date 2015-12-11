@@ -263,15 +263,7 @@ namespace Leda.Core.Gamestate_Management
 		{
 		}
 
-		public virtual void HandleGameResigned()
-		{
-		}
-
-		public virtual void HandleGameReturnedToForeground()
-		{
-		}
-
-		public virtual void HandleGameSentToBackground()
+		public virtual void HandleGameDeactivated()
 		{
 		}
 

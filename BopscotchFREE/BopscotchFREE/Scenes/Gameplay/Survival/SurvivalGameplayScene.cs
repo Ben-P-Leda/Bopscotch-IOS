@@ -224,6 +224,12 @@ namespace Bopscotch.Scenes.Gameplay.Survival
             base.HandleGameObscured();
         }
 
+        public override void HandleGameDeactivated()
+        {
+            if (!_paused) { AttemptToPauseGame(); }
+            base.HandleGameDeactivated();
+        }
+
         protected override void HandleTombstoneRecoveryCompletion()
         {
             TextureManager.ResaturateObjectTextures();

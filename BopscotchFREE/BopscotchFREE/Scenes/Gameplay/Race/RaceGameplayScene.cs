@@ -503,8 +503,8 @@ namespace Bopscotch.Scenes.Gameplay.Race
             ExitFollowingFocusLoss();
         }
 
-#if IOS
-		public override void HandleGameResigned()
+#if __IOS__
+		public override void HandleGameDeactivated()
 		{
 			ExitFollowingFocusLoss();
 		}
