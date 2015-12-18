@@ -94,19 +94,24 @@ namespace Leda.Core
         private static void DrawText(string text, SpriteBatch spriteBatch, SpriteFont font, Vector2 position, Color color, Vector2 origin,
             float scale, float depth)
         {
-            spriteBatch.DrawString(font, text, GameBase.ScreenPosition(position + (_padding * scale)), color, 0.0f, origin, 
+			spriteBatch.DrawString(font, text, GameBase.ScreenPosition(position + (_padding * scale * Platform_Scale_Modifier)), color, 0.0f, origin, 
 				GameBase.ScreenScale(scale * Platform_Scale_Modifier), SpriteEffects.None, depth);
 
-            CalculateLastTextArea(text, font, position + (_padding * scale), origin, scale);
+			CalculateLastTextArea(text, font, position + (_padding * scale * Platform_Scale_Modifier), origin, scale);
         }
 
         private static void CalculateLastTextArea(string text, SpriteFont font, Vector2 position, Vector2 origin, float scale)
         {
-            LastTextArea = new Rectangle(
+			LastTextArea = new Rectangle(
 				(int)(position.X - (origin.X * scale * Platform_Scale_Modifier)), 
 				(int)position.Y, 
 				(int)(font.MeasureString(text).X * scale * Platform_Scale_Modifier), 
 				(int)(font.MeasureString(text).Y * scale * Platform_Scale_Modifier));
+        }
+
+        public static Vector2 CalculateTextDimensions(string text, float scale)
+        {
+            return _font.MeasureString(text) * scale * Platform_Scale_Modifier;
         }
 
 		// Required by Android to make sure spritefont does not corrupt

@@ -60,6 +60,7 @@ namespace Bopscotch.Scenes.NonGame
             _dialogs.Add("areas-reset", new ResetAreasCompleteDialog());
             _dialogs.Add("unlocks", _unlockNotificationDialog);
             _dialogs.Add(Race_Aborted_Dialog, new DisconnectedDialog("Connection Broken - Race Aborted!"));
+			_dialogs.Add("info", new InfoMenuDialog());
 			_dialogs.Add(External_Access_Dialog, _externalActionDialog);
 
             BackgroundTextureName = Background_Texture_Name;
@@ -108,6 +109,7 @@ namespace Bopscotch.Scenes.NonGame
             _dialogs["areas-reset"].ExitCallback = HandleConfirmationDialogClose;
             _dialogs["unlocks"].ExitCallback = HandleConfirmationDialogClose;
             _dialogs[Race_Aborted_Dialog].ExitCallback = HandleConfirmationDialogClose;
+			_dialogs["info"].ExitCallback = HandleInfoDialogActionSelection;
 			_dialogs[External_Access_Dialog].ExitCallback = HandleExternalActionDialogClose;
         }
 
@@ -165,36 +167,6 @@ namespace Bopscotch.Scenes.NonGame
 			else { ActivateDialog("main"); }
 		}
 
-//		private void HandleTransactionDialogClose(string selectedOption)
-//		{
-//			if (selectedOption == "Back")
-//			{ 
-//				ActivateDialog("main");
-//			}
-//			else
-//			{
-//				PrepareForExternalAction(ExternalActionDialog.ActionType.PurchaseFullGame);
-//				GameBase.Instance.PurchaseManager.CompleteTransactionCallback = HandlePurchaseAttemptComplete;
-//
-//				if (selectedOption == "Restore")
-//				{
-//					GameBase.Instance.PurchaseManager.Restore();
-//				}
-//				else if (selectedOption == "Buy")
-//				{
-//					GameBase.Instance.PurchaseManager.PurchaseProduct(Full_Game_Product_Code);
-//				}
-//			}
-//
-//			switch (selectedOption)
-//			{
-//			case "Adventure": Data.Profile.PlayingRaceMode = false; ActivateDialog("survival-levels"); break;
-//			case "Race": HandleRaceStartSelection(); break;
-//			case "Full Game" : OpenPurchaseMechanism(); break;
-//			case "Back": ActivateDialog("main"); break;
-//			}
-//		}
-
 		private void OpenRatingMechanism()
 		{
 			PrepareForExternalAction(ExternalActionDialog.ActionType.RateGame);
@@ -228,13 +200,24 @@ namespace Bopscotch.Scenes.NonGame
             {
                 case "Start!": ActivateDialog("start"); break;
                 case "Character": ActivateDialog("characters"); break;
-                case "About": NextSceneType = typeof(CreditsScene); Deactivate(); break;
+                case "Info": ActivateDialog("info"); break;
                 case "Options": ActivateDialog("options"); break;
                 case "More Games": OpenLedaPageOnStore(); ActivateDialog("main"); break;
                 case "Store": NextSceneType = typeof(StoreScene); Deactivate(); break;
 				case "Rate": OpenRatingMechanism(); break;
-				//case "Full Game": OpenPurchaseMechanism(); break;
                 case "Quit": ExitGame(); break;
+            }
+        }
+		
+		private void HandleInfoDialogActionSelection(string selectedOption)
+        {
+            switch (selectedOption)
+            {
+                case "Rankings": NextSceneType = typeof(RankingScene); Deactivate(); break;
+                case "About": NextSceneType = typeof(CreditsScene); Deactivate(); break;
+                case "More Games": OpenLedaPageOnStore(); ActivateDialog("main"); break;
+                case "Rate Game": RateGame(); break;
+                case "Back": ActivateDialog("main"); break;
             }
         }
 
@@ -270,7 +253,6 @@ namespace Bopscotch.Scenes.NonGame
                 case "Add Lives": NextSceneType = typeof(StoreScene); Deactivate(); break;
                 case "Adventure": Data.Profile.PlayingRaceMode = false; ActivateDialog("survival-levels"); break;
                 case "Race": HandleRaceStartSelection(); break;
-				//case "Full Game" : OpenPurchaseMechanism(); break;
                 case "Back": ActivateDialog("main"); break;
             }
         }
