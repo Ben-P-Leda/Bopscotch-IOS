@@ -372,6 +372,10 @@
     <BundleResource Include="Content\Textures\Backgrounds\background-8.xnb" />
     <BundleResource Include="Content\Textures\Blocks\Special\bomb.xnb" />
     <BundleResource Include="Content\Textures\Effects\Particles\fireball.xnb" />
+    <BundleResource Include="Content\SoundEffects\bomb-explode.xnb" />
+    <BundleResource Include="Content\SoundEffects\bomb-trigger.xnb" />
+    <BundleResource Include="Content\Textures\Effects\award-stars.xnb" />
+    <BundleResource Include="Content\Textures\Effects\ranking-letters.xnb" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Communication\CommunicationHandler.cs" />
@@ -536,6 +540,13 @@
     <Compile Include="Interface\Dialogs\StoreScene\LoadingDialog.cs" />
     <Compile Include="Gameplay\Objects\Environment\Blocks\BombBlock.cs" />
     <Compile Include="Gameplay\Objects\Environment\Blocks\BombBlockBlastCollider.cs" />
+    <Compile Include="Scenes\NonGame\RankingScene.cs" />
+    <Compile Include="Interface\Dialogs\TitleScene\InfoMenuDialog.cs" />
+    <Compile Include="Interface\Dialogs\RankingScene\NavigationDialog.cs" />
+    <Compile Include="Gameplay\Coordination\SurvivalRankingCoordinator.cs" />
+    <Compile Include="Effects\Popups\Ranking\RankingLetter.cs" />
+    <Compile Include="Effects\Popups\Ranking\RankingPopupBase.cs" />
+    <Compile Include="Effects\Popups\Ranking\RankingStar.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
@@ -561,6 +572,8 @@
     <Folder Include="Content\Music\" />
     <Folder Include="Content\Files\Levels\Lava Cave\" />
     <Folder Include="Content\Files\Levels\Lava Cave\Survival\" />
+    <Folder Include="Interface\Dialogs\RankingScene\" />
+    <Folder Include="Effects\Popups\Ranking\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Music\avatar-build.mp3" />
