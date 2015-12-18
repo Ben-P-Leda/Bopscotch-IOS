@@ -216,7 +216,7 @@ namespace Bopscotch.Scenes.NonGame
                 case "Rankings": NextSceneType = typeof(RankingScene); Deactivate(); break;
                 case "About": NextSceneType = typeof(CreditsScene); Deactivate(); break;
                 case "More Games": OpenLedaPageOnStore(); ActivateDialog("main"); break;
-                case "Rate Game": RateGame(); break;
+                case "Rate Game": OpenRatingMechanism(); break;
                 case "Back": ActivateDialog("main"); break;
             }
         }
