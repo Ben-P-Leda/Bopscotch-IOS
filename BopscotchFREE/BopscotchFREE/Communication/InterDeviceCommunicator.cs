@@ -13,12 +13,11 @@ namespace Bopscotch.Communication
         private int _millisecondsToNextSend;
         private string _message;
         private string[] _expectedKeys;
-        private long _millisecondsSinceLastReceive;
-		private int _lastReceivedTimestamp;
-		private int _millisecondsSinceLastTimestampChange;
+        private int _lastReceivedTimestamp;
+        private int _millisecondsSinceLastTimestampChange;
 
         private OpponentRaceProgressCoordinator _otherPlayerData;
-		private string _selectedCourse;
+        private string _selectedCourse;
 
         private CommunicationHandler _communicationHandler;
 
@@ -33,13 +32,17 @@ namespace Bopscotch.Communication
             set 
             {
                 Enabled = value;
-                if (value) { _millisecondsToNextSend = 0; _millisecondsSinceLastReceive = 0; }
+                if (value) { _millisecondsToNextSend = 0; MillisecondsSinceLastReceive = 0; }
 				//else { if (_communicationHandler != null) { _communicationHandler.Close(); } _communicationHandler = null; }
             }
         }
 
+        public long MillisecondsSinceLastReceive { get; private set; }
+
         public string OwnPlayerRaceID { get; private set; }
         public string OtherPlayerRaceID { get; set; }
+        public string OtherPlayerName { get; set; }
+        public int OtherPlayerAvatarSlot { get; set; }
 
         public int SendInterval { private get; set; }
         public bool SendOnMessageChange { private get; set; }
@@ -49,13 +52,13 @@ namespace Bopscotch.Communication
         public Data.RacePlayerCommunicationData OwnPlayerData { get; set; }
         public Data.RacePlayerCommunicationData OtherPlayerData { get { return _otherPlayerData; } }
 
-		public bool RaceInProgress { private get; set; }
+        public bool RaceInProgress { private get; set; }
 
         public bool ConnectionLost
         {
             get
             {
-                if (_millisecondsSinceLastReceive > Connection_Loss_Timeout_In_Milliseconds) { return true; }
+                if (MillisecondsSinceLastReceive > Connection_Loss_Timeout_In_Milliseconds) { return true; }
                 if ((RaceInProgress) && (_millisecondsSinceLastTimestampChange > Connection_Loss_Timeout_In_Milliseconds))
                 {
                     return true;
@@ -66,9 +69,9 @@ namespace Bopscotch.Communication
         }
 
         public InterDeviceCommunicator()
-			: base(GameBase.Instance)
+            : base(GameBase.Instance)
         {
-			GameBase.Instance.Components.Add(this);
+            GameBase.Instance.Components.Add(this);
 
             _expectedKeys = Expected_Race_Keys.Split(',');
             _lastUpdateTime = TimeSpan.Zero;
@@ -118,7 +121,7 @@ namespace Bopscotch.Communication
 
             base.Update(gameTime);
 
-            _millisecondsSinceLastReceive += lastUpdateDuration;
+            MillisecondsSinceLastReceive += lastUpdateDuration;
 			if (RaceInProgress) { _millisecondsSinceLastTimestampChange += lastUpdateDuration; }
             _lastUpdateTime = gameTime.TotalGameTime;
         }
@@ -132,13 +135,13 @@ namespace Bopscotch.Communication
                 _communicationHandler.MyID = OwnPlayerRaceID;
                 _communicationHandler.Open();
             }
-			catch (Exception ex)
+            catch
             {
-				if (_communicationHandler != null)
-				{
-					_communicationHandler.Close ();
-					_communicationHandler = null;
-				}
+                if (_communicationHandler != null)
+                {
+                    _communicationHandler.Close();
+                    _communicationHandler = null;
+                }
             }
         }
 
@@ -159,20 +162,20 @@ namespace Bopscotch.Communication
             }
         }
 
-		public void SetForRace(string selectedCourse)
+        public void SetForRace(string selectedCourse)
         {
             SendInterval = Default_Send_Interval;
             Message = "";
             Active = true;
             SendOnMessageChange = false;
             CommsEventCallback = HandleCommsEvent;
-			RaceInProgress = true;
+            RaceInProgress = true;
 
-            _millisecondsSinceLastReceive = 0;
-			_lastReceivedTimestamp = 0;
-			_millisecondsSinceLastTimestampChange = 0;
+            MillisecondsSinceLastReceive = 0;
+            _lastReceivedTimestamp = 0;
+            _millisecondsSinceLastTimestampChange = 0;
             _otherPlayerData = new OpponentRaceProgressCoordinator();
-			_selectedCourse = selectedCourse;
+            _selectedCourse = selectedCourse;
         }
 
         private void HandleCommsEvent(Dictionary<string, string> data)
@@ -200,7 +203,7 @@ namespace Bopscotch.Communication
 
                     if (dataIsValid)
                     {
-                        _millisecondsSinceLastReceive = 0;
+                        MillisecondsSinceLastReceive = 0;
                         _otherPlayerData.Populate(elapsed, laps, lastCheckIndex, lastCheckTime, xpos, ypos);
 
                         if ((data.ContainsKey("pwr")) && (_powerUpTranslator.ContainsKey(data["pwr"].ToLower())))
@@ -227,7 +230,7 @@ namespace Bopscotch.Communication
                 }
                 else if ((!OtherPlayerData.ReadyToRace) && (data.ContainsKey("course")))
                 {
-                    _millisecondsSinceLastReceive = 0;
+                    MillisecondsSinceLastReceive = 0;
                 }
             }
         }
@@ -244,7 +247,7 @@ namespace Bopscotch.Communication
         private bool RaceIDIsValid(string raceID, string fieldName, Dictionary<string, string> data)
         {
             Guid temp = Guid.Empty;
-			if (!data.ContainsKey(fieldName)) { return false; }
+            if (!data.ContainsKey(fieldName)) { return false; }
             if (!Guid.TryParse(data[fieldName], out temp)) { return false; }
             if (data[fieldName] != raceID) { return false; }
 
@@ -253,10 +256,10 @@ namespace Bopscotch.Communication
 
         public void ResetLastReceiveTime()
         {
-            _millisecondsSinceLastReceive = 0;
+            MillisecondsSinceLastReceive = 0;
         }
 
-        private const int Default_Send_Interval = 100;
+        private const int Default_Send_Interval = 64;
         private const string Expected_Race_Keys = "id,target,elapsed,laps,pos-x,pos-y,cp-time,cp-no";
         private const int Connection_Loss_Timeout_In_Milliseconds = 5000;
     }
