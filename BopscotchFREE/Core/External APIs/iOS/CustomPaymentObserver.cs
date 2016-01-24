@@ -40,15 +40,16 @@ namespace Leda.Core.External_APIS.iOS
 			}
 		}
 		
-		public override void PaymentQueueRestoreCompletedTransactionsFinished (SKPaymentQueue queue)
-		{
-			// Restore succeeded
-			Console.WriteLine(" ** RESTORE PaymentQueueRestoreCompletedTransactionsFinished ");
-			if (CompleteTransactionCallback != null)
-			{
-				CompleteTransactionCallback("", true);
-			}
-		}
+		//public override void PaymentQueueRestoreCompletedTransactionsFinished (SKPaymentQueue queue)
+		//{
+		//	// Restore succeeded
+		//	Console.WriteLine(" ** RESTORE PaymentQueueRestoreCompletedTransactionsFinished ");
+		//	if (CompleteTransactionCallback != null)
+		//	{
+		//		CompleteTransactionCallback("", true);
+		//	}
+		//}
+
 		public override void RestoreCompletedTransactionsFailedWithError (SKPaymentQueue queue, NSError error)
 		{
 			// Restore failed somewhere...

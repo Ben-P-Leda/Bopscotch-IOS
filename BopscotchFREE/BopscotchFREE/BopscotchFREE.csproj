@@ -25,8 +25,7 @@
     <MtouchProfiling>true</MtouchProfiling>
     <CodesignKey>iPhone Developer</CodesignKey>
     <MtouchUseRefCounting>true</MtouchUseRefCounting>
-    <MtouchI18n>
-    </MtouchI18n>
+    <MtouchI18n></MtouchI18n>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>full</DebugType>
@@ -64,8 +63,7 @@
     <MtouchProfiling>true</MtouchProfiling>
     <CodesignKey>iPhone Developer: Ben Pritchard (XMF26RTG79)</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
-    <IpaPackageName>
-    </IpaPackageName>
+    <IpaPackageName></IpaPackageName>
     <CodesignProvision>0668d759-0a57-4103-8e53-b261fbeefeb4</CodesignProvision>
   </PropertyGroup>
   <ItemGroup>
@@ -292,7 +290,6 @@
     <BundleResource Include="Content\Textures\Interface\Icons\padlock.xnb" />
     <BundleResource Include="Content\Textures\Interface\Icons\tick.xnb" />
     <BundleResource Include="Content\Textures\Interface\InDialog\help.xnb" />
-    <BundleResource Include="Content\Textures\Interface\InDialog\iap-items.xnb" />
     <BundleResource Include="Content\Textures\Interface\InDialog\podium.xnb" />
     <BundleResource Include="Content\Textures\Interface\InGame\clock-base.xnb" />
     <BundleResource Include="Content\Textures\Interface\InGame\clock-needle.xnb" />
@@ -376,6 +373,8 @@
     <BundleResource Include="Content\SoundEffects\bomb-trigger.xnb" />
     <BundleResource Include="Content\Textures\Effects\award-stars.xnb" />
     <BundleResource Include="Content\Textures\Effects\ranking-letters.xnb" />
+    <BundleResource Include="Content\SoundEffects\ranking-star.xnb" />
+    <BundleResource Include="Content\Textures\Interface\InDialog\iap-items.xnb" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Communication\CommunicationHandler.cs" />

@@ -36,7 +36,7 @@ namespace Leda.Core.Asset_Management
 
         public static SoundEffectInstance PlayEffect(string effectName, float pitch)
         {
-            if ((!Muted) && (!MuteDueToObscuring))
+            if (!Muted)
             {
                 if ((_effectInstances != null) && (_effectInstances.ContainsKey(effectName)))
                 {
@@ -48,23 +48,6 @@ namespace Leda.Core.Asset_Management
                     _effects[effectName].Play(1.0f, pitch, 0.0f);
                 }
             }
-
-            return null;
-        }
-        public static SoundEffectInstance PlayEffect(string effectName)
-        {
-            if (!Muted) 
-            {
-				if ((_effectInstances != null) && (_effectInstances.ContainsKey(effectName))) { _effectInstances[effectName].Play(); return _effectInstances[effectName]; }
-				if ((_effects != null) && (_effects.ContainsKey(effectName))) { _effects[effectName].Play(); }
-            
-				//AVAudioPlayer player = AVAudioPlayer.FromUrl (NSUrl.FromFilename("Content//SoundEffects//menu-select.wav"));
-				//player.CurrentTime = player.Duration * 2;
-				//player.NumberOfLoops = 1;
-				//player.Volume = 1.0f;
-				//player.PrepareToPlay();
-				//player.Play ();
-			}
 
             return null;
         }
