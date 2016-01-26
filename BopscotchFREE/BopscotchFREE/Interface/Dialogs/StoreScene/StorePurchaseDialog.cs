@@ -85,19 +85,11 @@ namespace Bopscotch.Interface.Dialogs.StoreScene
 
             Dictionary<string, Point> iapImageMappings = new Dictionary<string, Point>()
             {
-                // TODO: SWITCH OVER TO NEW IAPS (BELOW) - remember to use iOS codes though!
-                //{ "Bopscotch_15_Lives", new Point(1,0) },
-                //{ "Bopscotch_30_Lives", new Point(1,1) },
-                //{ "Bopscotch_50_Lives", new Point(1,2) },
-                //{ "Bopscotch_2_Tickets", new Point(0,0) },
-                //{ "Bopscotch_5_Tickets", new Point(0,1) }
-
-                { "com.ledaentertainment.bopscotch.10lives", new Point(1,0) },
-                { "com.ledaentertainment.bopscotch.20lives", new Point(1,1) },
+                { "com.ledaentertainment.bopscotch.15lives", new Point(1,0) },
+                { "com.ledaentertainment.bopscotch.30lives", new Point(1,1) },
                 { "com.ledaentertainment.bopscotch.50lives", new Point(1,2) },
                 { "com.ledaentertainment.bopscotch.2tickets", new Point(0,0) },
                 { "com.ledaentertainment.bopscotch.5tickets", new Point(0,1) },
-                { "com.ledaentertainment.bopscotch.10tickets", new Point(0,2) }
             };
 
             _productInfo = new Dictionary<string, string>();

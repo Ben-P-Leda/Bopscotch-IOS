@@ -72,19 +72,11 @@ namespace Bopscotch.Scenes.NonGame
             GameBase.Instance.PurchaseManager.RequestProductData(
                 new List<string>() 
                 {
-                    // TODO: SWITCH OVER TO NEW IAPS (BELOW) - remember to use iOS codes though!
-                    //{ "Bopscotch_15_Lives", new Point(1,0) },
-                    //{ "Bopscotch_30_Lives", new Point(1,1) },
-                    //{ "Bopscotch_50_Lives", new Point(1,2) },
-                    //{ "Bopscotch_2_Tickets", new Point(0,0) },
-                    //{ "Bopscotch_5_Tickets", new Point(0,1) }
-
-                    "com.ledaentertainment.bopscotch.10lives",
-                    "com.ledaentertainment.bopscotch.20lives",
+                    "com.ledaentertainment.bopscotch.15lives",
+                    "com.ledaentertainment.bopscotch.30lives",
                     "com.ledaentertainment.bopscotch.50lives",
                     "com.ledaentertainment.bopscotch.2tickets",
-                    "com.ledaentertainment.bopscotch.5tickets",
-                    "com.ledaentertainment.bopscotch.10tickets",
+                    "com.ledaentertainment.bopscotch.5tickets"
                 });
         }
 
@@ -153,20 +145,11 @@ namespace Bopscotch.Scenes.NonGame
         {
             switch (productCode)
             {
-
-                // TODO: SWITCH OVER TO NEW IAPS (BELOW) - remember to use iOS codes though!
-                //case "Bopscotch_15_Lives": Data.Profile.Lives += 15; break;                 // £0.79 - $0.99
-                //case "Bopscotch_30_Lives": Data.Profile.Lives += 30; break;                 // £1.49 - $1.99
-                //case "Bopscotch_50_Lives": Data.Profile.Lives += 50; break;                 // £2.29 - $2.99
-                //case "Bopscotch_2_Tickets": Data.Profile.GoldenTickets += 2; break;         // £0.79
-                //case "Bopscotch_5_Tickets": Data.Profile.GoldenTickets += 5; break;         // £1.49
-
-                case "com.ledaentertainment.bopscotch.10lives": Data.Profile.Lives += 10; break;
-                case "com.ledaentertainment.bopscotch.20lives": Data.Profile.Lives += 20; break;
-                case "com.ledaentertainment.bopscotch.50lives": Data.Profile.Lives += 50; break;
-                case "com.ledaentertainment.bopscotch.2tickets": Data.Profile.GoldenTickets += 2; break;
-                case "com.ledaentertainment.bopscotch.5tickets": Data.Profile.GoldenTickets += 5; break;
-                case "com.ledaentertainment.bopscotch.10tickets": Data.Profile.GoldenTickets += 10; break;
+                case "com.ledaentertainment.bopscotch.15lives": Data.Profile.Lives += 15; break;            // £0.79 - $0.99
+                case "com.ledaentertainment.bopscotch.30lives": Data.Profile.Lives += 30; break;            // £1.49 - $1.99
+                case "com.ledaentertainment.bopscotch.50lives": Data.Profile.Lives += 50; break;            // £2.29 - $2.99
+                case "com.ledaentertainment.bopscotch.2tickets": Data.Profile.GoldenTickets += 2; break;    // £0.79
+                case "com.ledaentertainment.bopscotch.5tickets": Data.Profile.GoldenTickets += 5; break;    // £1.49
             }
 
             Data.Profile.Save();
