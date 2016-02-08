@@ -403,7 +403,6 @@
     <BundleResource Include="Content\Textures\Signs\SpeedLimit\sign-speed-3-4.xnb" />
     <BundleResource Include="Content\Textures\Signs\SpeedLimit\sign-speed-4-4.xnb" />
     <BundleResource Include="Content\Textures\Interface\button-icon-strip.xnb" />
-    <BundleResource Include="Content\Files\Levels\Lava Cave\Survival\0.xml" />
     <BundleResource Include="Content\Textures\Backgrounds\background-8.xnb" />
     <BundleResource Include="Content\Textures\Blocks\Special\bomb.xnb" />
     <BundleResource Include="Content\Textures\Effects\Particles\fireball.xnb" />
@@ -413,6 +412,17 @@
     <BundleResource Include="Content\Textures\Effects\ranking-letters.xnb" />
     <BundleResource Include="Content\SoundEffects\ranking-star.xnb" />
     <BundleResource Include="Content\Textures\Interface\InDialog\iap-items.xnb" />
+    <BundleResource Include="Content\Files\Levels\Lava Cave\RaceStage.xml" />
+    <BundleResource Include="Content\Files\Levels\Lava Cave\Survival\0.xml" />
+    <BundleResource Include="Content\Files\Levels\Lava Cave\Survival\1.xml" />
+    <BundleResource Include="Content\Files\Levels\Lava Cave\Survival\2.xml" />
+    <BundleResource Include="Content\Files\Levels\Lava Cave\Survival\3.xml" />
+    <BundleResource Include="Content\Files\Levels\Lava Cave\Survival\4.xml" />
+    <BundleResource Include="Content\Files\Levels\Lava Cave\Survival\5.xml" />
+    <BundleResource Include="Content\Files\Levels\Lava Cave\Survival\6.xml" />
+    <BundleResource Include="Content\Files\Levels\Lava Cave\Survival\7.xml" />
+    <BundleResource Include="Content\Files\Levels\Lava Cave\Survival\8.xml" />
+    <BundleResource Include="Content\Files\Levels\Lava Cave\Survival\9.xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Communication\CommunicationHandler.cs" />
