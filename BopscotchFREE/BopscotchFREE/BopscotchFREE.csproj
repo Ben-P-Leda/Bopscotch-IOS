@@ -283,14 +283,6 @@
     <BundleResource Include="Content\Textures\WhitePixel.xnb" />
     <BundleResource Include="Content\Textures\leda-logo.xnb" />
     <BundleResource Include="Content\Textures\load-spinner.xnb" />
-    <BundleResource Include="Content\Textures\Backgrounds\background-1.xnb" />
-    <BundleResource Include="Content\Textures\Backgrounds\background-2.xnb" />
-    <BundleResource Include="Content\Textures\Backgrounds\background-3.xnb" />
-    <BundleResource Include="Content\Textures\Backgrounds\background-4.xnb" />
-    <BundleResource Include="Content\Textures\Backgrounds\background-5.xnb" />
-    <BundleResource Include="Content\Textures\Backgrounds\background-6.xnb" />
-    <BundleResource Include="Content\Textures\Backgrounds\background-7.xnb" />
-    <BundleResource Include="Content\Textures\Backgrounds\background-tutorial.xnb" />
     <BundleResource Include="Content\Textures\Blocks\Obstruction\circle-top.xnb" />
     <BundleResource Include="Content\Textures\Blocks\Obstruction\diamond.xnb" />
     <BundleResource Include="Content\Textures\Blocks\Obstruction\double-top.xnb" />
@@ -336,7 +328,6 @@
     <BundleResource Include="Content\Textures\Interface\InGame\speedo-center.xnb" />
     <BundleResource Include="Content\Textures\Interface\InGame\speedo-needle.xnb" />
     <BundleResource Include="Content\Textures\Interface\InGame\speedo-segment.xnb" />
-    <BundleResource Include="Content\Textures\Interface\InGame\tap-icon.xnb" />
     <BundleResource Include="Content\Textures\Players\bodies.xnb" />
     <BundleResource Include="Content\Textures\Players\Eyes\anime.xnb" />
     <BundleResource Include="Content\Textures\Players\Eyes\female.xnb" />
@@ -403,7 +394,6 @@
     <BundleResource Include="Content\Textures\Signs\SpeedLimit\sign-speed-3-4.xnb" />
     <BundleResource Include="Content\Textures\Signs\SpeedLimit\sign-speed-4-4.xnb" />
     <BundleResource Include="Content\Textures\Interface\button-icon-strip.xnb" />
-    <BundleResource Include="Content\Textures\Backgrounds\background-8.xnb" />
     <BundleResource Include="Content\Textures\Blocks\Special\bomb.xnb" />
     <BundleResource Include="Content\Textures\Effects\Particles\fireball.xnb" />
     <BundleResource Include="Content\SoundEffects\bomb-explode.xnb" />
@@ -423,6 +413,30 @@
     <BundleResource Include="Content\Files\Levels\Lava Cave\Survival\7.xml" />
     <BundleResource Include="Content\Files\Levels\Lava Cave\Survival\8.xml" />
     <BundleResource Include="Content\Files\Levels\Lava Cave\Survival\9.xml" />
+    <BundleResource Include="Content\Textures\Backgrounds\Ghostberg\back.xnb" />
+    <BundleResource Include="Content\Textures\Backgrounds\Ghostberg\segments.xnb" />
+    <BundleResource Include="Content\Textures\Backgrounds\Ghostberg\thumbnail.xnb" />
+    <BundleResource Include="Content\Textures\Backgrounds\Hilltops\back.xnb" />
+    <BundleResource Include="Content\Textures\Backgrounds\Hilltops\segments.xnb" />
+    <BundleResource Include="Content\Textures\Backgrounds\Hilltops\thumbnail.xnb" />
+    <BundleResource Include="Content\Textures\Backgrounds\Island\back.xnb" />
+    <BundleResource Include="Content\Textures\Backgrounds\Island\segments.xnb" />
+    <BundleResource Include="Content\Textures\Backgrounds\Island\thumbnail.xnb" />
+    <BundleResource Include="Content\Textures\Backgrounds\Lava Cave\back.xnb" />
+    <BundleResource Include="Content\Textures\Backgrounds\Lava Cave\segments.xnb" />
+    <BundleResource Include="Content\Textures\Backgrounds\Lava Cave\thumbnail.xnb" />
+    <BundleResource Include="Content\Textures\Backgrounds\Metropolis\back.xnb" />
+    <BundleResource Include="Content\Textures\Backgrounds\Metropolis\segments.xnb" />
+    <BundleResource Include="Content\Textures\Backgrounds\Metropolis\thumbnail.xnb" />
+    <BundleResource Include="Content\Textures\Backgrounds\Snowville\thumbnail.xnb" />
+    <BundleResource Include="Content\Textures\Backgrounds\Snowville\segments.xnb" />
+    <BundleResource Include="Content\Textures\Backgrounds\Snowville\back.xnb" />
+    <BundleResource Include="Content\Textures\Backgrounds\Stadium\back.xnb" />
+    <BundleResource Include="Content\Textures\Backgrounds\Stadium\segments.xnb" />
+    <BundleResource Include="Content\Textures\Backgrounds\Waterfall\back.xnb" />
+    <BundleResource Include="Content\Textures\Backgrounds\Waterfall\segments.xnb" />
+    <BundleResource Include="Content\Textures\Backgrounds\Waterfall\thumbnail.xnb" />
+    <BundleResource Include="Content\Textures\Backgrounds\clouds.xnb" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Communication\CommunicationHandler.cs" />
@@ -482,7 +496,6 @@
     <Compile Include="Gameplay\Objects\Display\Survival\PauseButton.cs" />
     <Compile Include="Gameplay\Objects\Display\Survival\SurvivalDataDisplay.cs" />
     <Compile Include="Gameplay\Objects\Display\Survival\TutorialRunner.cs" />
-    <Compile Include="Gameplay\Objects\Environment\Background.cs" />
     <Compile Include="Gameplay\Objects\Environment\Blackout.cs" />
     <Compile Include="Gameplay\Objects\Environment\BlockMap.cs" />
     <Compile Include="Gameplay\Objects\Environment\Blocks\Block.cs" />
@@ -594,6 +607,11 @@
     <Compile Include="Effects\Popups\Ranking\RankingLetter.cs" />
     <Compile Include="Effects\Popups\Ranking\RankingPopupBase.cs" />
     <Compile Include="Effects\Popups\Ranking\RankingStar.cs" />
+    <Compile Include="Scenes\Objects\AnimatedBackground.cs" />
+    <Compile Include="Scenes\Objects\AnimatedBackgroundCloud.cs" />
+    <Compile Include="Scenes\Objects\AnimatedBackgroundSegment.cs" />
+    <Compile Include="Scenes\Objects\IAnimatedBackgroundComponent.cs" />
+    <Compile Include="Interface\Dialogs\SurvivalGameplayScene\TutorialDialog.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
