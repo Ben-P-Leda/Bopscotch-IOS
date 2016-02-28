@@ -26,8 +26,8 @@
     </completion-unlockables>
   </area>
   <area name="Lava Cave" level-count="10" selection-texture="background-8" difficulty-tag="Simple" speed-step="1" locked="true">
-    <!--- <completion-unlockables>
-      <unlockable type="golden-ticket" unlocked="false" units="1" />
-    </completion-unlockables> -->
+    <completion-unlockables>
+      <unlockable type="avatar-costume" unlocked="false" name="Miner" trial-unlockable="false" />
+    </completion-unlockables>
   </area>
 </areas>
