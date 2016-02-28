@@ -95,7 +95,7 @@ namespace Leda.Core
             _sceneTransitionCrossFadeTextureName = "";
 
 			PurchaseManager = new External_APIS.iOS.InAppPurchaseManager();
-			ReviewManager = new External_APIS.iOS.ReviewAppManager();
+			
         }
 
         private Vector2 ConvertToScreenPosition(Vector2 worldSpacePosition) { return (worldSpacePosition * _resolutionScaling) + _resolutionOffset; }
@@ -106,6 +106,8 @@ namespace Leda.Core
         {
 			MusicManager.Initialize();
             base.Initialize();
+
+            ReviewManager = new External_APIS.iOS.ReviewAppManager();
         }
 
         protected override void OnActivated(object sender, EventArgs args)

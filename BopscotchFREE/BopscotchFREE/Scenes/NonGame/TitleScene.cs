@@ -166,7 +166,7 @@ namespace Bopscotch.Scenes.NonGame
 			PrepareForExternalAction(ExternalActionDialog.ActionType.RateGame);
 
 			GameBase.Instance.ReviewManager.CompletionCallback = HandleRatingAttemptComplete;
-			GameBase.Instance.ReviewManager.InitiateReviewProcess(914282798);
+            GameBase.Instance.ReviewManager.InitiateReviewProcess(394057299);//914282798);
 		}
 
 		private void HandleRatingAttemptComplete()

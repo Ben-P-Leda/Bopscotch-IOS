@@ -26,7 +26,6 @@ namespace Leda.Core.External_APIS.iOS
 		public ReviewAppManager()
 		{
 			_storeProductViewController = new SKStoreProductViewController();
-			_rootViewController = UIApplication.SharedApplication.Windows[0].RootViewController;
 		}
 
 		public void InitiateReviewProcess(int appID)
@@ -35,6 +34,11 @@ namespace Leda.Core.External_APIS.iOS
 			ErrorMessage = "";
 
 			StoreProductParameters spp = new StoreProductParameters(appID);
+
+            if (_rootViewController == null)
+            {
+                _rootViewController = UIApplication.SharedApplication.Windows[0].RootViewController;
+            }
 
 			_storeProductViewController.LoadProduct(spp, (ok, err) => {
 				if (ok) {
