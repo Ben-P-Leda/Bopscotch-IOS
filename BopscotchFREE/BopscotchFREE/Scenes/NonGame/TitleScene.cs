@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 using Microsoft.Xna.Framework;
 
+using UIKit;
+using Foundation;
+
 using Leda.Core.Gamestate_Management;
 using Leda.Core.Asset_Management;
 using Leda.Core.Game_Objects.Controllers;
@@ -26,7 +29,6 @@ namespace Bopscotch.Scenes.NonGame
         private string _musicToStartOnDeactivation;
         private bool _doNotExitOnTitleDismiss;
         private bool _returningFromRateOrBuy;
-		private bool _fullGameWasRestored;
 
         private NewContentUnlockedDialog _unlockNotificationDialog;
 		private ExternalActionDialog _externalActionDialog;
@@ -68,7 +70,6 @@ namespace Bopscotch.Scenes.NonGame
                 });
 
             _returningFromRateOrBuy = false;
-			_fullGameWasRestored = false;
         }
 
         private void HandlePopupAnimationComplete()
@@ -76,7 +77,6 @@ namespace Bopscotch.Scenes.NonGame
             if (_titlePopup.AwaitingDismissal) 
 			{
 				if (_firstDialog == "purchase") { OpenPurchaseMechanism(); }
-				else if (_firstDialog == Rate_Game_Dialog) { OpenRatingMechanism(); }
 				else { ActivateDialog(_firstDialog); _doNotExitOnTitleDismiss = false; }
 			}
             else if (!_doNotExitOnTitleDismiss) 
@@ -111,9 +111,25 @@ namespace Bopscotch.Scenes.NonGame
         {
             switch (selectedOption)
             {
-				case "Rate Game": OpenRatingMechanism();; break;
+                case "Rate Game": RateGame("main"); break;
 				case "Buy Full":  OpenPurchaseMechanism(); break;
                 case "Back": ActivateDialog("main"); break;
+            }
+        }
+
+        private void RateGame(string resumeDialog)
+        {
+            UIApplication.SharedApplication.OpenUrl(new NSUrl("itms-apps://itunes.apple.com/app/id"+Definitions.IOS_App_Id));
+            Data.Profile.FlagAsRated();
+
+            if (!Data.Profile.AvatarCostumeUnlocked("Angel"))
+            {
+                Data.Profile.UnlockCostume("Angel");
+                DisplayRatingUnlockedContent();
+            }
+            else
+            {
+                ActivateDialog(resumeDialog);
             }
         }
 
@@ -197,7 +213,7 @@ namespace Bopscotch.Scenes.NonGame
                 case "Info": ActivateDialog("info"); break;
                 case "Options": ActivateDialog("options"); break;
                 case "Store": NextSceneType = typeof(StoreScene); Deactivate(); break;
-				case "Rate": OpenRatingMechanism(); break;
+                case "Rate": RateGame("main"); break;
                 case "Quit": ExitGame(); break;
             }
         }
@@ -209,7 +225,7 @@ namespace Bopscotch.Scenes.NonGame
                 case "Rankings": NextSceneType = typeof(RankingScene); Deactivate(); break;
                 case "About": NextSceneType = typeof(CreditsScene); Deactivate(); break;
                 case "More Games": OpenLedaPageOnStore(); ActivateDialog("main"); break;
-                case "Rate Game": OpenRatingMechanism(); break;
+                case "Rate Game": RateGame("info"); break;
                 case "Back": ActivateDialog("main"); break;
             }
         }
@@ -217,6 +233,15 @@ namespace Bopscotch.Scenes.NonGame
         private void OpenLedaPageOnStore()
         {
 			UIKit.UIApplication.SharedApplication.OpenUrl(new Foundation.NSUrl("http://www.ledaentertainment.com/games"));
+        }
+
+        private void DisplayRatingUnlockedContent()
+        {
+            _unlockNotificationDialog.PrepareForActivation();
+            _unlockNotificationDialog.AddItem("New Costume - Angel");
+
+            if (CurrentState == Status.Active) { ActivateDialog("unlocks"); }
+            else { _firstDialog = "unlocks"; }
         }
 
         private void ExitGame()
@@ -255,6 +280,7 @@ namespace Bopscotch.Scenes.NonGame
             switch (selectedOption)
             {
                 case "Start!":
+                    Data.Profile.DecreasePlaysToNextRatingReminder();
                     NextSceneType = typeof(Gameplay.Survival.SurvivalGameplayScene);
                     _musicToStartOnDeactivation = "survival-gameplay";
                     _titlePopup.Dismiss();
@@ -362,7 +388,7 @@ namespace Bopscotch.Scenes.NonGame
         {
             _firstDialog = NextSceneParameters.Get<string>(First_Dialog_Parameter_Name);
 
-            if (string.IsNullOrEmpty(_firstDialog)) { _firstDialog = Default_First_Dialog; }
+            if (_firstDialog == Rate_Game_Dialog) { DisplayRatingUnlockedContent(); }
             else if (string.IsNullOrEmpty(_firstDialog)) { _firstDialog = Default_First_Dialog; }
             else if ((_firstDialog == "start") && (Data.Profile.RateBuyRemindersOn)) { _firstDialog = Reminder_Dialog; }
 

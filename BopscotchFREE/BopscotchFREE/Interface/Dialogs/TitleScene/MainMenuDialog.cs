@@ -48,7 +48,7 @@ namespace Bopscotch.Interface.Dialogs.TitleScene
                 case "Facebook": webUrl = "http://www.facebook.com/ledaentertainment"; break;
                 case "Twitter": webUrl = "http://www.twitter.com/ledaentertain"; break;
                 case "Leda": webUrl = "http://www.ledaentertainment.com/games"; break;
-                case "Rate": buttonShouldDismissDialog = RateGame(); break;
+                case "Rate": _activeButtonCaption = buttonCaption; buttonShouldDismissDialog = true; break;
                 case "Full Game": _activeButtonCaption = buttonCaption; buttonShouldDismissDialog = true; break;
                 default: buttonShouldDismissDialog = base.HandleButtonTouch(buttonCaption); break;
             }
@@ -59,19 +59,6 @@ namespace Bopscotch.Interface.Dialogs.TitleScene
             }
 
             return buttonShouldDismissDialog;
-        }
-
-        private bool RateGame()
-        {
-            StoreKit.SKStoreProductViewController storeView = new StoreKit.SKStoreProductViewController();
-            storeView.LoadProduct(new StoreKit.StoreProductParameters(914282798),RatingCallback);
-
-            return false;
-        }
-
-        public void RatingCallback(bool complete, Foundation.NSError error)
-        {
-            bool temp = true;
         }
 
         private const int Dialog_Height = 480;

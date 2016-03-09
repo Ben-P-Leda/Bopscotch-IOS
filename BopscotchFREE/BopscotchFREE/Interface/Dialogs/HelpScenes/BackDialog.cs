@@ -1,5 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 
+using UIKit;
+using Foundation;
+
 namespace Bopscotch.Interface.Dialogs
 {
     public class BackDialog : ButtonDialog
@@ -36,21 +39,40 @@ namespace Bopscotch.Interface.Dialogs
         protected override bool HandleButtonTouch(string buttonCaption)
         {
             string webUrl = "";
+            bool shouldDismiss = false;
 
             switch (buttonCaption)
             {
                 case "Facebook": webUrl = "http://www.facebook.com/ledaentertainment"; break;
                 case "Twitter": webUrl = "http://www.twitter.com/ledaentertain"; break;
                 case "Leda": webUrl = "http://www.ledaentertainment.com/games"; break;
-				default: return base.HandleButtonTouch(buttonCaption); break;
+                case "Rate": shouldDismiss = RateAndCheckForNewContent(); break;
+                case "Back": shouldDismiss = true; break;
             }
 
             if (!string.IsNullOrEmpty(webUrl))
             {
-				UIKit.UIApplication.SharedApplication.OpenUrl(new Foundation.NSUrl(webUrl));
+				UIApplication.SharedApplication.OpenUrl(new NSUrl(webUrl));
             }
 
-            return false;
+            return shouldDismiss;
+        }
+
+        private bool RateAndCheckForNewContent()
+        {
+            bool newContentWasUnlocked = false;
+
+            UIApplication.SharedApplication.OpenUrl(new NSUrl("itms-apps://itunes.apple.com/app/id"+Definitions.IOS_App_Id));
+            Data.Profile.FlagAsRated();
+
+            if (!Data.Profile.AvatarCostumeUnlocked("Angel"))
+            {
+                Data.Profile.UnlockCostume("Angel");
+                _activeButtonCaption = "Rate";
+                newContentWasUnlocked = true;
+            }
+
+            return newContentWasUnlocked;
         }
 
         private const int Dialog_Height = 150;
