@@ -6,9 +6,8 @@
     <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <ProjectGuid>{62453ABF-21B9-4E6E-AD36-553A36E1DFE0}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>BopscotchFREE</RootNamespace>
+    <RootNamespace>Bopscotch</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <AssemblyName>BopscotchFREE</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
     <DebugSymbols>true</DebugSymbols>
@@ -27,9 +26,9 @@
     <MtouchUseRefCounting>true</MtouchUseRefCounting>
     <MtouchI18n>
     </MtouchI18n>
+    <AssemblyName>BopscotchFREE</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
-    <DebugType>full</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\iPhone\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
@@ -38,7 +37,10 @@
     <MtouchArch>ARMv7, ARM64</MtouchArch>
     <ConsolePause>false</ConsolePause>
     <CodesignKey>iPhone Distribution: Leda Entertainment Ltd. (JRT76KN578)</CodesignKey>
-    <CodesignProvision>Automatic:AppStore</CodesignProvision>
+    <CodesignProvision>aa3b1250-65a6-4e1c-a715-07904467a979</CodesignProvision>
+    <AssemblyName>Bopscotch</AssemblyName>
+    <IpaPackageName>
+    </IpaPackageName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>full</DebugType>
@@ -49,6 +51,7 @@
     <MtouchArch>i386</MtouchArch>
     <ConsolePause>false</ConsolePause>
     <MtouchLink>None</MtouchLink>
+    <AssemblyName>BopscotchFREE</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
     <DebugSymbols>true</DebugSymbols>
@@ -67,6 +70,7 @@
     <IpaPackageName>
     </IpaPackageName>
     <CodesignProvision>0668d759-0a57-4103-8e53-b261fbeefeb4</CodesignProvision>
+    <AssemblyName>Bopscotch</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />

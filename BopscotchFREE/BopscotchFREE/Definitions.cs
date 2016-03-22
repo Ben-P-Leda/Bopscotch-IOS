@@ -33,7 +33,7 @@ namespace Bopscotch
         public const string Avatar_Skeleton_Front = "player-front";
         public const int Avatar_Customisation_Slot_Count = 4;
 
-        public const string IOS_App_Id = "394057299";//914282798
+        public const string IOS_App_Id = "914282798";
 
         public enum AspectRatio
         {
