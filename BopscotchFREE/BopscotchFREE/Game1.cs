@@ -6,10 +6,14 @@ using Microsoft.Xna.Framework.Graphics;
 using Leda.Core;
 using Leda.Core.Asset_Management;
 
+using Leda.FacebookAdapter;
+
 namespace Bopscotch
 {
     public class Game1 : GameBase
     {
+        public static IFacebookAdapter FacebookAdapter;
+
 		public Game1()
 			: base(Orientation.Landscape)
         {
@@ -33,6 +37,12 @@ namespace Bopscotch
             AddScene(new Scenes.Gameplay.Race.RaceStartScene() { Communicator = communicator });
             AddScene(new Scenes.Gameplay.Race.RaceGameplayScene() { Communicator = communicator });
             AddScene(new Scenes.Gameplay.Race.RaceFinishScene());
+
+            FacebookAdapter.ApplicationName = "Bopscotch";
+            FacebookAdapter.Caption = "Bounce, jump, smash, munch";
+            FacebookAdapter.Description = "Back on iOS!";
+            FacebookAdapter.Link = "http://www.ledaentertainment.com/games/bopscotch";
+            FacebookAdapter.ImageUrl = "http://www.ledaentertainment.com/images/icons/facebook/bopscotch_fb_tile.png";
 
             base.Initialize();
 
