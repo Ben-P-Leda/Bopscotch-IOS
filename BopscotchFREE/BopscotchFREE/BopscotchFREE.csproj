@@ -618,6 +618,12 @@
     <Compile Include="Scenes\Objects\AnimatedBackgroundSegment.cs" />
     <Compile Include="Scenes\Objects\IAnimatedBackgroundComponent.cs" />
     <Compile Include="Interface\Dialogs\SurvivalGameplayScene\TutorialDialog.cs" />
+    <Compile Include="Input\GamerServices\Guide.cs" />
+    <Compile Include="Input\GamerServices\KeyboardInputView.cs" />
+    <Compile Include="Input\GamerServices\KeyboardInputViewController.cs" />
+    <Compile Include="Input\GamerServices\TextFieldAlertView.cs" />
+    <Compile Include="Input\GamerServices\MessageBoxIcon.cs" />
+    <Compile Include="Input\GamerServices\NotificationPosition.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>

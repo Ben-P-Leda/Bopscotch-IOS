@@ -137,7 +137,8 @@ namespace Bopscotch.Scenes.NonGame
                 case "Info": ActivateDialog("info"); break;
                 case "Options": ActivateDialog("options"); break;
                 case "Store": NextSceneType = typeof(StoreScene); Deactivate(); break;
-                case "Rate": RateGame("main"); break;
+                //case "Rate": RateGame("main"); break;
+                case "Rate": Microsoft.Xna.Framework.GamerServices.Guide.BeginShowKeyboardInput(PlayerIndex.One, "Test", "Test", "Test", null, null); break;
                 case "Quit": ExitGame(); break;
             }
         }
