@@ -45,7 +45,8 @@ namespace Bopscotch.Interface.Dialogs.TitleScene
 
             switch (buttonCaption)
             {
-                case "Facebook": webUrl = "http://www.facebook.com/ledaentertainment"; break;
+                //case "Facebook": webUrl = "http://www.facebook.com/ledaentertainment"; break;
+                case "Facebook": HandleFacebookRequest(); break;
                 case "Twitter": webUrl = "http://www.twitter.com/ledaentertain"; break;
                 case "Leda": webUrl = "http://www.ledaentertainment.com/games"; break;
                 case "Rate": _activeButtonCaption = buttonCaption; buttonShouldDismissDialog = true; break;
@@ -59,6 +60,18 @@ namespace Bopscotch.Interface.Dialogs.TitleScene
             }
 
             return buttonShouldDismissDialog;
+        }
+
+        private void HandleFacebookRequest()
+        {
+            if (Game1.FacebookAdapter.IsLoggedIn)
+            {
+                Game1.FacebookAdapter.AttemptPost("Test Post");
+            }
+            else
+            {
+                Game1.FacebookAdapter.AttemptLogin();
+            }
         }
 
         private const int Dialog_Height = 480;

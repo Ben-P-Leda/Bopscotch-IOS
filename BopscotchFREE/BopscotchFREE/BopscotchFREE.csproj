@@ -78,6 +78,10 @@
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.iOS" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="Facebook">
+      <HintPath>..\Components\facebook-sdk-6.2.2\lib\ios-unified\Facebook.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoTouch.Dialog-1" />
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Contents.json" />
@@ -624,6 +628,10 @@
     <Compile Include="Input\GamerServices\TextFieldAlertView.cs" />
     <Compile Include="Input\GamerServices\MessageBoxIcon.cs" />
     <Compile Include="Input\GamerServices\NotificationPosition.cs" />
+    <Compile Include="Facebook\Definitions.cs" />
+    <Compile Include="Facebook\FacebookAdapterBase.cs" />
+    <Compile Include="Facebook\IFacebookAdapter.cs" />
+    <Compile Include="Facebook\IOSFacebookAdapter.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
@@ -651,6 +659,7 @@
     <Folder Include="Content\Files\Levels\Lava Cave\Survival\" />
     <Folder Include="Interface\Dialogs\RankingScene\" />
     <Folder Include="Effects\Popups\Ranking\" />
+    <Folder Include="Facebook\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Music\avatar-build.mp3" />
@@ -661,5 +670,11 @@
   <ItemGroup>
     <ITunesArtwork Include="iTunesArtwork" />
     <ITunesArtwork Include="iTunesArtwork%402x" />
+  </ItemGroup>
+  <ItemGroup>
+    <XamarinComponentReference Include="facebook-sdk">
+      <Version>6.2.2</Version>
+      <Visible>False</Visible>
+    </XamarinComponentReference>
   </ItemGroup>
 </Project>
