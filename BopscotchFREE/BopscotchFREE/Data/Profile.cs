@@ -24,13 +24,20 @@ namespace Bopscotch.Data
             }
         }
 
+        private static int LifeRestoreInterval 
+        {
+            get { return Game1.FacebookAdapter.IsLoggedIn ? Enhanced_Life_Restore_Interval : Normal_Life_Restore_Interval; } 
+        }
+
+        public static string FacebookToken { get; set; }
+
 		public static bool HasRated { get { return Instance._hasRated; } }
 
         public static PhoneSettings Settings { get { return Instance._settings; } }
 
         public static int Lives { get { return Instance._livesRemaining; } set { Instance._livesRemaining = value; } }
         public static bool NotAtFullLives { get { return Lives < Maximum_Life_Count; } }
-        public static DateTime NextLifeRestoreTime { get { return _instance._lastLivesUpdateTime.AddSeconds(Life_Restore_Interval); } }
+        public static DateTime NextLifeRestoreTime { get { return _instance._lastLivesUpdateTime.AddSeconds(LifeRestoreInterval); } }
         public static int GoldenTickets { get { return Instance._goldenTicketCount; } set { Instance._goldenTicketCount = value; } }
         public static bool PlayingRaceMode { get; set; }
         public static bool PauseOnSceneActivation { get; set; }
@@ -83,12 +90,14 @@ namespace Bopscotch.Data
         public static void UnlockCostume(string costumeName) { Instance.UnlockAvatarCostume(costumeName); }
         public static void DecreasePlaysToNextRatingReminder() { Instance.DecreasePlaysBeforeReminder(); }
         public static void UpdateReminderDetails() { Instance.UpdateReminderParameters(); }
+        public static bool AwardIapReward() { return Instance.CheckForIapReward(); }
 
         private Dictionary<string, AreaDataContainer> _areaLevelData;
         private string _currentArea;
         private bool _livesElementAdded;
         private int _livesRemaining;
         private int _goldenTicketCount;
+        private int _iapCount;
         private List<XElement> _newlyUnlockedItems;
         private List<XElement> _unlockedAvatarComponents;
 
@@ -150,6 +159,8 @@ namespace Bopscotch.Data
             _goldenTicketCount = 0;
             _newlyUnlockedItems = new List<XElement>();
             _unlockedAvatarComponents = new List<XElement>();
+
+            FacebookToken = "";
         }
 
         private Profile GetProfile()
@@ -190,20 +201,17 @@ namespace Bopscotch.Data
 
             _hasRated = serializer.GetDataItem<bool>("has-rated");
 
-            if (serializedData.Elements("dataitem").Any(x => x.Attribute("name").Value == "reminder-plays"))
-            {
-                _playsBeforeNextReminder = serializer.GetDataItem<int>("reminder-plays");
-            }
-            else
-            {
-                _playsBeforeNextReminder = Initial_Plays_Before_Rating_Reminder;
-            }
+            _playsBeforeNextReminder = serializer.GetDataItem<int>("reminder-plays", Initial_Plays_Before_Rating_Reminder);
+            _iapCount = serializer.GetDataItem<int>("iap-count", 0);
+
             _nextReminderDate = serializer.GetDataItem<DateTime>("next-reminder");
             _livesElementAdded = serializer.GetDataItem<bool>("lives-added");
             _livesRemaining = serializer.GetDataItem<int>("lives-remaining");
             _lastLivesUpdateTime = serializer.GetDataItem<DateTime>("lives-updated");
             _goldenTicketCount = serializer.GetDataItem<int>("golden-tickets");
             _currentArea = serializer.GetDataItem<string>("last-area");
+
+            FacebookToken = serializer.GetDataItem<string>("fb-token", string.Empty);
 
             LoadAreaDataFromXml(serializer.GetDataElement("survival-area-data"));
             LoadAvatarComponentDataFromXml(serializer.GetDataElement("avatar-component-data"));
@@ -272,9 +280,9 @@ namespace Bopscotch.Data
         {
             _rateBuyRemindersOn = true;
 
-            if (_hasRated)
-            {
-                _rateBuyRemindersOn = false;
+			if (_hasRated)
+            { 
+                _rateBuyRemindersOn = false; 
             }
             else if ((DateTime.Now < _nextReminderDate) && (DateTime.Now.AddDays(Days_Before_Reminders_Start) > _nextReminderDate))
             {
@@ -314,6 +322,22 @@ namespace Bopscotch.Data
             SaveData();
         }
 
+        private bool CheckForIapReward()
+        {
+            bool awardReward = false;
+
+            if (!CheckForAvatarCostumeUnlock("Mummy"))
+            {
+                _iapCount++;
+                if (_iapCount > 2)
+                {
+                    awardReward = true;
+                }
+            }
+
+            return awardReward;
+        }
+
         private void SaveData()
         {
             XDocument profileData = new XDocument(new XDeclaration("1.0", "utf", "yes"));
@@ -331,12 +355,15 @@ namespace Bopscotch.Data
             serializer.AddDataItem("config-settings", _settings);
             serializer.AddDataItem("has-rated", _hasRated);
             serializer.AddDataItem("reminder-plays", _playsBeforeNextReminder);
+            serializer.AddDataItem("iap-count", _iapCount);
             serializer.AddDataItem("next-reminder",_nextReminderDate);
             serializer.AddDataItem("lives-added", true);
             serializer.AddDataItem("lives-remaining", _livesRemaining);
             serializer.AddDataItem("lives-updated", _lastLivesUpdateTime);
             serializer.AddDataItem("golden-tickets", _goldenTicketCount);
             serializer.AddDataItem("last-area", _currentArea);
+            serializer.AddDataItem("fb-token", FacebookToken);
+
             serializer.AddDataElement(SerializedAreaData);
             serializer.AddDataElement(SerializedAvatarComponentData);
 
@@ -503,13 +530,13 @@ namespace Bopscotch.Data
             {
                 bool updated = false;
 
-                while (_lastLivesUpdateTime.AddSeconds(Life_Restore_Interval) < DateTime.Now)
+                while (_lastLivesUpdateTime.AddSeconds(LifeRestoreInterval) < DateTime.Now)
                 {
                     _livesRemaining++;
                     updated = true;
 
                     if (_livesRemaining == Maximum_Life_Count) { _lastLivesUpdateTime = DateTime.Now; }
-                    else { _lastLivesUpdateTime = _lastLivesUpdateTime.AddSeconds(Life_Restore_Interval); }
+                    else { _lastLivesUpdateTime = _lastLivesUpdateTime.AddSeconds(LifeRestoreInterval); }
                 }
 
                 if (updated) { SaveData(); }
@@ -534,7 +561,8 @@ namespace Bopscotch.Data
         private const int Initial_Plays_Before_Rating_Reminder = 5;
         private const int Plays_Between_Rating_Reminders = 20;
         private const int Maximum_Life_Count = 20;
-        private const int Life_Restore_Interval = 180;
+        private const int Normal_Life_Restore_Interval = 180;
+        private const int Enhanced_Life_Restore_Interval = 135;
 
         public const int Race_Win_Lives_Max = 40;
         public const int Race_Win_Lives_Reward = 5;

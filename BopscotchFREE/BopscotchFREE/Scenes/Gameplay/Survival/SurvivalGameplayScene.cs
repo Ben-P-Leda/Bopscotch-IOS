@@ -34,6 +34,7 @@ namespace Bopscotch.Scenes.Gameplay.Survival
         private SurvivalRankingCoordinator _rankingCoordinator;
         private bool _levelComplete;
         private int _attemptsAtCurrentLevel;
+        private bool _hasMadeProgress;
 
         private SurvivalDataDisplay StatusDisplay { get { return (SurvivalDataDisplay)_statusDisplay; } set { _statusDisplay = value; } }
 
@@ -75,6 +76,10 @@ namespace Bopscotch.Scenes.Gameplay.Survival
                 case "Quit":
                     NextSceneParameters.Set(TitleScene.First_Dialog_Parameter_Name, "start");
                     NextSceneParameters.Set("music-already-running", false);
+                    if (_hasMadeProgress)
+                    {
+                        NextSceneParameters.Set("share-action", Bopscotch.Facebook.ShareAction.Progress);
+                    }
                     NextSceneType = typeof(TitleScene); 
                     Profile.PauseOnSceneActivation = false; 
                     Deactivate(); 
@@ -95,7 +100,11 @@ namespace Bopscotch.Scenes.Gameplay.Survival
         private void HandleLevelSkip()
         {
             if ((_readyPopup.Visible) && (!_readyPopup.BeingDismissed)) { _readyPopup.Dismiss(); }
-            Profile.GoldenTickets--;
+
+            if (Data.Profile.CurrentAreaData.Name != "Tutorial")
+            {
+                Profile.GoldenTickets--;
+            }
             _player.TriggerLevelSkip();
             _paused = false;
         }
@@ -137,7 +146,7 @@ namespace Bopscotch.Scenes.Gameplay.Survival
             _rankingCoordinator.LevelCompleted = true;
 
             Definitions.SurvivalRank rank = _rankingCoordinator.GetRankForLevel(_levelData);
-            Profile.CurrentAreaData.UpdateCurrentLevelResults(_levelData.PointsScoredThisLevel, rank);
+            _hasMadeProgress = Profile.CurrentAreaData.UpdateCurrentLevelResults(_levelData.PointsScoredThisLevel, rank);
             Profile.Save();
 
             if (Profile.CurrentAreaData.Name == "Tutorial")
@@ -156,7 +165,7 @@ namespace Bopscotch.Scenes.Gameplay.Survival
             Profile.Save();
 
             if (Profile.CurrentAreaData.Completed) 
-            { 
+            {
                 CompleteArea(); 
             }
             else 
@@ -207,6 +216,10 @@ namespace Bopscotch.Scenes.Gameplay.Survival
             if (_levelData != null) { ObjectsToSerialize.Remove(_levelData); }
 
             _attemptsAtCurrentLevel = NextSceneParameters.Get<int>("attempt-count");
+            if (NextSceneParameters.Get<bool>("clear-progress-flag"))
+            {
+                _hasMadeProgress = false;
+            }
 
             _levelComplete = false;
             _rankingCoordinator.Reset();
@@ -216,7 +229,7 @@ namespace Bopscotch.Scenes.Gameplay.Survival
             ObjectsToSerialize.Add(_levelData);
             StatusDisplay.CurrentLevelData = _levelData;
             StatusDisplay.FreezeDisplayedScore = false;
-            RaceAreaName = "";
+            ConfigureForAdventure();
 
             base.Activate();
 
@@ -370,7 +383,7 @@ namespace Bopscotch.Scenes.Gameplay.Survival
         private void EnablePause()
         {
             _paused = true;
-            _pauseDialog.SkipLevelButtonDisabled = ((Profile.GoldenTickets < 1) || (Data.Profile.CurrentAreaData.Name == "Tutorial") || (_levelComplete));
+            _pauseDialog.SkipLevelButtonDisabled = (((Profile.GoldenTickets < 1) && (Data.Profile.CurrentAreaData.Name != "Tutorial")) || (_levelComplete));
             _pauseDialog.Activate();
         }
 

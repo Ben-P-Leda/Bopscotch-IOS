@@ -29,11 +29,20 @@ namespace Bopscotch
         public const float Left_Button_Column_X = 500.0f;
         public const float Right_Button_Column_X = 1100.0f;
 
+        public const float Background_Texture_Thumbnail_Scale = 0.3f;
+
         public const string Avatar_Skeleton_Side = "player-side";
         public const string Avatar_Skeleton_Front = "player-front";
         public const int Avatar_Customisation_Slot_Count = 4;
 
         public const string IOS_App_Id = "914282798";
+		
+        public const string Course_Area_Parameter = "course-area-name";
+        public const string Course_Speed_Parameter = "course-speed";
+        public const string Race_Outcome_Parameter = "race-outcome";
+        public const string Race_Lives_Parameter = "race-lives-awarded";
+        public const string Share_Action_Parameter = "share-action";
+        public const string Area_Name_Parameter = "last-area-name";
 
         public enum AspectRatio
         {

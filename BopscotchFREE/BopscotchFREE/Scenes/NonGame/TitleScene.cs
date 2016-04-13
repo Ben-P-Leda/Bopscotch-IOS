@@ -19,6 +19,7 @@ using Bopscotch.Interface.Dialogs.TitleScene;
 using Bopscotch.Interface.Content;
 using Bopscotch.Effects;
 using Bopscotch.Effects.Popups;
+using Bopscotch.Facebook;
 
 namespace Bopscotch.Scenes.NonGame
 {
@@ -34,10 +35,15 @@ namespace Bopscotch.Scenes.NonGame
 
         private PopupRequiringDismissal _titlePopup;
 
+        private FacebookLoginManager _facebookLoginManager;
+        private FacebookConfigurator _facebookConfigurator;
+
         public TitleScene()
             : base()
         {
             _animationController = new AnimationController();
+            _facebookLoginManager = new FacebookLoginManager();
+            _facebookConfigurator = new FacebookConfigurator();
 
             _titlePopup = new PopupRequiringDismissal();
             _titlePopup.AnimationCompletionHandler = HandlePopupAnimationComplete;
@@ -46,17 +52,17 @@ namespace Bopscotch.Scenes.NonGame
             _unlockNotificationDialog = new NewContentUnlockedDialog();
 
             _dialogs.Add("reminder", new RateBuyReminderDialog());
-            _dialogs.Add("main", new MainMenuDialog());
+            _dialogs.Add("main", new MainMenuDialog() { FacebookLoginManager = _facebookLoginManager });
             _dialogs.Add("start", new StartMenuDialog());
             _dialogs.Add("survival-levels", new SurvivalStartCarouselDialog(RegisterGameObject, UnregisterGameObject));
             _dialogs.Add("characters", new CharacterSelectionCarouselDialog(RegisterGameObject, UnregisterGameObject));
-            _dialogs.Add("options", new OptionsDialog());
+            _dialogs.Add("options", new OptionsDialog() { FacebookLoginManager = _facebookLoginManager });
             _dialogs.Add("keyboard", new KeyboardDialog());
             _dialogs.Add("reset-areas", new ResetAreasConfirmDialog());
             _dialogs.Add("areas-reset", new ResetAreasCompleteDialog());
             _dialogs.Add("unlocks", _unlockNotificationDialog);
             _dialogs.Add(Race_Aborted_Dialog, new DisconnectedDialog("Connection Broken - Race Aborted!"));
-			_dialogs.Add("info", new InfoMenuDialog());
+            _dialogs.Add("info", new InfoMenuDialog());
 
             RegisterGameObject(
                 new TextContent(Translator.Translation("Leda Entertainment Presents"), new Vector2(Definitions.Back_Buffer_Center.X, 60.0f))
@@ -137,8 +143,8 @@ namespace Bopscotch.Scenes.NonGame
                 case "Info": ActivateDialog("info"); break;
                 case "Options": ActivateDialog("options"); break;
                 case "Store": NextSceneType = typeof(StoreScene); Deactivate(); break;
-                //case "Rate": RateGame("main"); break;
-                case "Rate": Microsoft.Xna.Framework.GamerServices.Guide.BeginShowKeyboardInput(PlayerIndex.One, "Test", "Test", "Test", null, null); break;
+                case "Rate": RateGame("main"); break;
+                case "Facebook": HandleFirstFacebookLogin(); break;
                 case "Quit": ExitGame(); break;
             }
         }
@@ -206,6 +212,7 @@ namespace Bopscotch.Scenes.NonGame
             {
                 case "Start!":
                     Data.Profile.DecreasePlaysToNextRatingReminder();
+                    NextSceneParameters.Set("clear-progress-flag", true);
                     NextSceneType = typeof(Gameplay.Survival.SurvivalGameplayScene);
                     _musicToStartOnDeactivation = "survival-gameplay";
                     _titlePopup.Dismiss();
@@ -243,8 +250,28 @@ namespace Bopscotch.Scenes.NonGame
 
         private void HandleOptionsDialogClose(string selectedOption)
         {
-            if (selectedOption == "Reset Game") { ActivateDialog("reset-areas"); }
-            else { ActivateDialog("main"); }
+            switch (selectedOption)
+            {
+                case "Reset Game":
+                    ActivateDialog("reset-areas");
+                    break;
+                case "Facebook":
+                    HandleFirstFacebookLogin();
+                    break;
+                default:
+                    ActivateDialog("main");
+                    break;
+            }
+        }
+
+        private void HandleFirstFacebookLogin()
+        {
+            _unlockNotificationDialog.PrepareForActivation();
+            _unlockNotificationDialog.AddItem("Facebook connection reward");
+            _unlockNotificationDialog.AddItem("New Costume - Wizard");
+
+            if (CurrentState == Status.Active) { ActivateDialog("unlocks"); }
+            else { _firstDialog = "unlocks"; }
         }
 
         private void HandleResetAreasConfirmDialogClose(string selectedOption)
@@ -317,8 +344,20 @@ namespace Bopscotch.Scenes.NonGame
             else if (string.IsNullOrEmpty(_firstDialog)) { _firstDialog = Default_First_Dialog; }
             else if ((_firstDialog == "start") && (Data.Profile.RateBuyRemindersOn)) { _firstDialog = Reminder_Dialog; }
 
-            if (_firstDialog != "unlocks") { UnlockFullVersionContent(); }
-			else if ((Data.Profile.HasRated) && (!Data.Profile.AvatarCostumeUnlocked("Angel"))) { UnlockRatedContent(); }
+            if (Game1.FacebookAdapter.IsLoggedIn)
+            {
+                ShareAction shareAction = NextSceneParameters.Get<ShareAction>(Definitions.Share_Action_Parameter);
+                if (shareAction != ShareAction.None)
+                {
+                    string areaName = shareAction == ShareAction.Progress
+                        ? Data.Profile.CurrentAreaData.Name
+                        : NextSceneParameters.Get<string>(Definitions.Area_Name_Parameter);
+
+                    LaunchFacebookShareModal(NextSceneParameters.Get<ShareAction>(Definitions.Share_Action_Parameter), areaName);
+                }
+            }
+
+            UnlockIfUpgradingFromLegacy();
 
             _titlePopup.Activate(); 
             _doNotExitOnTitleDismiss = false;
@@ -326,34 +365,45 @@ namespace Bopscotch.Scenes.NonGame
             base.CompleteActivation();
         }
 
-        private void UnlockFullVersionContent()
+        private void LaunchFacebookShareModal(ShareAction shareAction, string areaName)
         {
-            _unlockNotificationDialog.PrepareForActivation();
+            _facebookConfigurator.ConfigureForShareAction(shareAction, areaName);
 
+            Bopscotch.Interface.KeyboardHelper.BeginShowKeyboardInput(
+                Translator.Translation("Share on Facebook"),
+                Translator.Translation(_facebookConfigurator.ModalPrompt),
+                Translator.Translation(_facebookConfigurator.ModalDefaultText),
+                ShareResult);
+        }
+
+        private void ShareResult(IAsyncResult result)
+        {
+            string message = Bopscotch.Interface.KeyboardHelper.EndShowKeyboardInput(result);
+
+            Android.Util.Log.Debug("LEDA-FB", string.IsNullOrWhiteSpace(message) ? "Cancelled or Empty" : message);
+
+            if (!string.IsNullOrWhiteSpace(message))
+            {
+                Game1.FacebookAdapter.Caption = "www.ledaentertainment.com";
+                Game1.FacebookAdapter.Description = _facebookConfigurator.PostText;
+                Game1.FacebookAdapter.AttemptPost(message);
+
+
+                if (_facebookConfigurator.LivesToAdd > 0)
+                {
+                    Data.Profile.Lives += _facebookConfigurator.LivesToAdd;
+                    Data.Profile.Save();
+                }
+            }
+        }
+
+        private void UnlockIfUpgradingFromLegacy()
+        {
             if ((Data.Profile.AreaIsLocked("Waterfall")) && (Data.Profile.AreaHasBeenCompleted("Hilltops")))
             {
                 Data.Profile.UnlockNamedArea("Waterfall");
-                _unlockNotificationDialog.AddItem("New Levels - Waterfall Area");
             }
-
-            if (!Data.Profile.AvatarCostumeUnlocked("Wizard"))
-            {
-                Data.Profile.UnlockCostume("Wizard");
-                Data.Profile.UnlockCostume("Mummy");
-                _unlockNotificationDialog.AddItem("New Costumes - Wizard, Mummy");
-            }
-
-            if (_unlockNotificationDialog.HasContent) { _firstDialog = "unlocks"; }
         }
-
-		private void UnlockRatedContent()
-		{
-			Data.Profile.UnlockCostume("Angel");
-			_unlockNotificationDialog.PrepareForActivation();
-			_unlockNotificationDialog.AddItem("New Costume - Angel");
-
-			if (_unlockNotificationDialog.HasContent) { _firstDialog = "unlocks"; }
-		}
 
         public override void Update(GameTime gameTime)
         {

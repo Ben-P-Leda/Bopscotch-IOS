@@ -2,10 +2,14 @@
 
 using Leda.Core;
 
+using Bopscotch.Facebook;
+
 namespace Bopscotch.Interface.Dialogs.TitleScene
 {
     public class MainMenuDialog : ButtonDialog
     {
+        public FacebookLoginManager FacebookLoginManager { private get; set; }
+
         public MainMenuDialog()
             : base()
         {
@@ -20,12 +24,18 @@ namespace Bopscotch.Interface.Dialogs.TitleScene
             AddButton("Store", new Vector2(Definitions.Right_Button_Column_X, 85), Button.ButtonIcon.Store, Color.Orange, 0.7f);
 
             AddIconButton("Facebook", new Vector2(Social_Button_Spacing * 2.0f, Social_Button_Y), Button.ButtonIcon.Facebook, Color.DodgerBlue, 0.6f);
-            AddIconButton("Twitter", new Vector2(Social_Button_Spacing * 3.0f, Social_Button_Y), Button.ButtonIcon.Twitter, Color.DodgerBlue, 0.6f);
-            AddIconButton("Leda", new Vector2(Definitions.Back_Buffer_Width - (Social_Button_Spacing * 3.0f), Social_Button_Y), Button.ButtonIcon.Website, Color.DodgerBlue, 0.6f);
             AddIconButton("Rate", new Vector2(Definitions.Back_Buffer_Width - (Social_Button_Spacing * 2.0f), Social_Button_Y), Button.ButtonIcon.Rate, Color.Orange, 0.6f);
 
             _defaultButtonCaption = "Start!";
             _cancelButtonCaption = "Quit";
+        }
+
+        public override void Activate()
+        {
+            _buttons["Facebook"].IconBackgroundTint = (Game1.FacebookAdapter.IsLoggedIn ? Color.LawnGreen : Color.Red);
+            FacebookLoginManager.ConnectToDialog(this, _buttons["Facebook"]);
+
+            base.Activate();
         }
 
         protected override void ActivateButton(string caption)
@@ -41,37 +51,15 @@ namespace Bopscotch.Interface.Dialogs.TitleScene
         protected override bool HandleButtonTouch(string buttonCaption)
         {
             bool buttonShouldDismissDialog = false;
-            string webUrl = "";
 
             switch (buttonCaption)
             {
-                //case "Facebook": webUrl = "http://www.facebook.com/ledaentertainment"; break;
-                case "Facebook": HandleFacebookRequest(); break;
-                case "Twitter": webUrl = "http://www.twitter.com/ledaentertain"; break;
-                case "Leda": webUrl = "http://www.ledaentertainment.com/games"; break;
-                case "Rate": _activeButtonCaption = buttonCaption; buttonShouldDismissDialog = true; break;
-                case "Full Game": _activeButtonCaption = buttonCaption; buttonShouldDismissDialog = true; break;
+                case "Facebook": FacebookLoginManager.SetFacebookConnectionState(); break;
+                case "Rate": _activeButtonCaption = "Rate"; buttonShouldDismissDialog = true; break;
                 default: buttonShouldDismissDialog = base.HandleButtonTouch(buttonCaption); break;
             }
 
-            if (!string.IsNullOrEmpty(webUrl))
-            {
-                UIKit.UIApplication.SharedApplication.OpenUrl(new Foundation.NSUrl(webUrl));
-            }
-
             return buttonShouldDismissDialog;
-        }
-
-        private void HandleFacebookRequest()
-        {
-            if (Game1.FacebookAdapter.IsLoggedIn)
-            {
-                Game1.FacebookAdapter.AttemptPost("Test Post");
-            }
-            else
-            {
-                Game1.FacebookAdapter.AttemptLogin();
-            }
         }
 
         private const int Dialog_Height = 480;

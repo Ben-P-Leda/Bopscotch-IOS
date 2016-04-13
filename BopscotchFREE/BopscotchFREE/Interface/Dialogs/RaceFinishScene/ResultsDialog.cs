@@ -40,7 +40,7 @@ namespace Bopscotch.Interface.Dialogs.RaceFinishScene
             Height = Dialog_Height;
             TopYWhenActive = Top_Y_When_Active;
 
-            AddButton("Exit", new Vector2(Definitions.Left_Button_Column_X, 625), Button.ButtonIcon.Play, Color.Red, 0.7f);
+            AddButton("Exit", new Vector2(Definitions.Right_Button_Column_X, 625), Button.ButtonIcon.Play, Color.Red, 0.7f);
 
             _defaultButtonCaption = "Exit";
             _cancelButtonCaption = "Exit";

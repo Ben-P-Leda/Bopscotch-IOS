@@ -38,9 +38,7 @@ namespace Bopscotch
             AddScene(new Scenes.Gameplay.Race.RaceGameplayScene() { Communicator = communicator });
             AddScene(new Scenes.Gameplay.Race.RaceFinishScene());
 
-            FacebookAdapter.ApplicationName = "Bopscotch";
-            FacebookAdapter.Caption = "Bounce, jump, smash, munch";
-            FacebookAdapter.Description = "Back on iOS!";
+            FacebookAdapter.ApplicationName = "BOPSCOTCH";
             FacebookAdapter.Link = "http://www.ledaentertainment.com/games/bopscotch";
             FacebookAdapter.ImageUrl = "http://www.ledaentertainment.com/images/icons/facebook/bopscotch_fb_tile.png";
 
