@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -8,7 +8,6 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>Bopscotch</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <AssemblyName>BopscotchFREE</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
     <DebugSymbols>true</DebugSymbols>
@@ -85,126 +84,46 @@
     <Reference Include="MonoTouch.Dialog-1" />
   </ItemGroup>
   <ItemGroup>
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Contents.json">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\spotlight-ios56-29x29.png">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\spotlight-ios56-2x-58x58.png">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\spotlight-ios56-3x-87x87.png">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\spotlight-ios7-2x80x80.png">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\ios7-2x-120x120.png">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\ios56-57x57.png">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\ios56-2x-114x114.png">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\ios7-3x-180x180.png">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\spotlight-ios7-40x40.png">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\spotlight-ios56-50x50.png">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\spotlight-ios56-2x-100x100.png">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\ios56-72x72.png">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\ios56-2x-144x144.png">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\ios7-76x76.png">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\ios7-2x-152x152.png">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\ios9-pro-2x-167x167.png">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\Contents.json">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\Default.png">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\Default%402x.png">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\Default-568h%402x.png">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\Default-Portrait.png">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\Default-Landscape.png">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\Default-Portrait%402x.png">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\Default-Landscape%402x.png">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\1242x2208.png">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\750x1334.png">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\2208x1242.png">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\2048x2732.png">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\2732x2048.png">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\640x960.png">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\640x1136.png">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\768x1024.png">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\1536x2048.png">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\1024x768.png">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\2048x1535.png">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\768x1004.png">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\1536x2008.png">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\1024x748.png">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\2048x1496.png">
-      <InProject>false</InProject>
-    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Contents.json" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\spotlight-ios56-29x29.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\spotlight-ios56-2x-58x58.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\spotlight-ios56-3x-87x87.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\spotlight-ios7-2x80x80.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\ios7-2x-120x120.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\ios56-57x57.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\ios56-2x-114x114.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\ios7-3x-180x180.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\spotlight-ios7-40x40.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\spotlight-ios56-50x50.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\spotlight-ios56-2x-100x100.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\ios56-72x72.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\ios56-2x-144x144.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\ios7-76x76.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\ios7-2x-152x152.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\ios9-pro-2x-167x167.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\Contents.json" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\Default.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\Default%402x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\Default-568h%402x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\Default-Portrait.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\Default-Landscape.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\Default-Portrait%402x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\Default-Landscape%402x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\1242x2208.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\750x1334.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\2208x1242.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\2048x2732.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\2732x2048.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\640x960.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\640x1136.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\768x1024.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\1536x2048.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\1024x768.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\2048x1535.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\768x1004.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\1536x2008.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\1024x748.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\2048x1496.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -562,9 +481,6 @@
     <Compile Include="Effects\SmashBlockItems\SmashBlockItem.cs" />
     <Compile Include="Effects\SmashBlockItems\SmashBlockItemFactory.cs" />
     <Compile Include="Effects\SmashBlockItems\SmashBlockItemMotionEngine.cs" />
-    <Compile Include="Facebook\FacebookConfigFactory.cs" />
-    <Compile Include="Facebook\FacebookLoginManager.cs" />
-    <Compile Include="Facebook\ShareAction.cs" />
     <Compile Include="Gameplay\LevelFactory.cs" />
     <Compile Include="Gameplay\Controllers\PlayerTrackingCameraController.cs" />
     <Compile Include="Gameplay\Coordination\RacePowerUpCoordinator.cs" />
@@ -728,7 +644,23 @@
       <Name>Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Communication\" />
+    <Folder Include="Content\" />
+    <Folder Include="Data\" />
+    <Folder Include="Effects\" />
+    <Folder Include="Gameplay\" />
+    <Folder Include="Input\" />
+    <Folder Include="Interface\" />
+    <Folder Include="Interface\Dialogs\HelpScenes\" />
+    <Folder Include="Scenes\" />
+    <Folder Include="Content\Music\" />
+    <Folder Include="Content\Files\Levels\Lava Cave\" />
+    <Folder Include="Content\Files\Levels\Lava Cave\Survival\" />
+    <Folder Include="Interface\Dialogs\RankingScene\" />
+    <Folder Include="Effects\Popups\Ranking\" />
+    <Folder Include="Facebook\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Music\avatar-build.mp3" />
     <Content Include="Content\Music\race-gameplay.mp3" />
